@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+@theme {
+  /* Genel tema değişkenleri */
+  --font-display: "Inter", sans-serif;
+  --spacing: 0.25rem;
+  
+  /* Renk Paleti - Müşteri Seçimi (Doğal & Şık Tonlar) */
+  --color-koyu-yesil: #0A100D;
+  --color-acik-bej: #B9BAA3;
+  --color-acik-krem: #D6D5C9;
+  --color-koyu-kirmizi: #A22C29;
+  --color-daha-koyu-kirmizi: #902923;
+}
+
+/* Custom CSS Classes - Müşteri Renk Paleti */
+.bg-koyu-yesil { background-color: var(--color-koyu-yesil) !important; }
+.bg-acik-bej { background-color: var(--color-acik-bej) !important; }
+.bg-acik-krem { background-color: var(--color-acik-krem) !important; }
+.bg-koyu-kirmizi { background-color: var(--color-koyu-kirmizi) !important; }
+.bg-daha-koyu-kirmizi { background-color: var(--color-daha-koyu-kirmizi) !important; }
+
+.text-koyu-yesil { color: var(--color-koyu-yesil) !important; }
+.text-acik-bej { color: var(--color-acik-bej) !important; }
+.text-acik-krem { color: var(--color-acik-krem) !important; }
+.text-koyu-kirmizi { color: var(--color-koyu-kirmizi) !important; }
+.text-daha-koyu-kirmizi { color: var(--color-daha-koyu-kirmizi) !important; }
+
+.border-koyu-yesil { border-color: var(--color-koyu-yesil) !important; }
+.border-acik-bej { border-color: var(--color-acik-bej) !important; }
+.border-acik-krem { border-color: var(--color-acik-krem) !important; }
+.border-koyu-kirmizi { border-color: var(--color-koyu-kirmizi) !important; }
+.border-daha-koyu-kirmizi { border-color: var(--color-daha-koyu-kirmizi) !important; }
