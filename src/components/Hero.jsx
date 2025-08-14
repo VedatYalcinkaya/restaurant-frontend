@@ -50,7 +50,7 @@ const Hero = () => {
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-7xl font-bold text-koyu-yesil mb-6 leading-tight"
           >
-            ESSZIMMER
+            MiPueblo
           </motion.h1>
           
           <motion.p
@@ -59,7 +59,7 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xl md:text-2xl text-gray-600 mb-4 font-light tracking-wide"
           >
-            K Ö L N
+            Köln
           </motion.p>
           
           <motion.div
@@ -69,7 +69,7 @@ const Hero = () => {
             className="mb-12"
           >
             <p className="text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
-              Weniger Alltag, mehr Außergewöhnliches im Esszimmer Köln.
+              Weniger Alltag, mehr Außergewöhnliches im MiPueblo Köln.
             </p>
             
             <div className="flex flex-col items-center mt-8 mb-8">

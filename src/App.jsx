@@ -26,6 +26,7 @@ import JobDetailPage from './pages/JobDetailPage';
 import AdminJobApplicationsPage from './admin/career/AdminJobApplicationsPage';
 import AdminJobsPage from './admin/career/AdminJobsPage';
 import AdminJobForm from './admin/career/AdminJobForm';
+import AdminContactMessagesPage from './admin/contact/AdminContactMessagesPage';
 
 // Kimlik doğrulama sayfaları
 import LoginPage from './login/LoginPage';
@@ -39,7 +40,7 @@ function App() {
     dispatch(checkAuthStatus());
     
     // Sayfa title'ını ayarla
-    document.title = "Esszimmer Köln - Restaurant";
+    document.title = "MiPueblo Köln - Restaurant";
   }, [dispatch]);
 
   return (
@@ -64,8 +65,6 @@ function App() {
           </>
         } />
         {/* Public Kariyer */}
-        <Route path="/careers" element={<CareerPage />} />
-        <Route path="/careers/:id" element={<JobDetailPage />} />
         
         {/* Kimlik Doğrulama Rotaları */}
         <Route path="/login" element={<LoginPage />} />
@@ -88,6 +87,7 @@ function App() {
           <Route path="jobs" element={<AdminJobsPage />} />
           <Route path="jobs/new" element={<AdminJobForm />} />
           <Route path="jobs/edit/:id" element={<AdminJobForm />} />
+          <Route path="contact-messages" element={<AdminContactMessagesPage />} />
         </Route>
         
         {/* 404 Sayfası */}

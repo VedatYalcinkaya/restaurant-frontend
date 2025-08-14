@@ -7,6 +7,8 @@ import ReservationPage from './pages/ReservationPage'
 import ContactPage from './pages/ContactPage'
 import Navbar from './components/Navbar'
 import NotFound from './pages/NotFound'
+import CareerPage from './pages/CareerPage'
+import JobDetailPage from './pages/JobDetailPage'
 
 const Dashboard = () => {
   const location = useLocation();
@@ -43,6 +45,8 @@ const Dashboard = () => {
             <Route path="about" element={<AboutPage />} />
             <Route path="reservation" element={<ReservationPage />} />
             <Route path="contact" element={<ContactPage />} />
+            <Route path="careers" element={<CareerPage />} />
+            <Route path="careers/:id" element={<JobDetailPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

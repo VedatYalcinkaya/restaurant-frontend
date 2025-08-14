@@ -133,7 +133,7 @@ const HomePage = () => {
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
               Weniger Alltag, mehr Außergewöhnliches - 
-              im Esszimmer Köln.
+              im MiPueblo Köln.
             </h2>
             <p className="text-white/90 text-lg mb-8 leading-relaxed">
               Lassen Sie sich von unserer Küche und unserem Service verwöhnen. 

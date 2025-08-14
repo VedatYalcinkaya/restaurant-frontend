@@ -29,7 +29,7 @@ const NotFound = () => {
                   transition={{ delay: 0.3, duration: 0.5 }}
                   className="text-3xl md:text-4xl font-bold text-gray-800 mt-4 text-center md:text-left"
                 >
-                  Sayfa Bulunamadı
+                  Seite nicht gefunden
                 </motion.h1>
                 <motion.p
                   initial={{ y: 20, opacity: 0 }}
@@ -37,7 +37,7 @@ const NotFound = () => {
                   transition={{ delay: 0.4, duration: 0.5 }}
                   className="mt-4 text-gray-600 text-center md:text-left"
                 >
-                  Aradığınız sayfa taşınmış, kaldırılmış veya hiç var olmamış olabilir.
+                  Die gesuchte Seite wurde verschoben, entfernt oder hat nie existiert.
                 </motion.p>
                 
                 <motion.div
@@ -48,20 +48,10 @@ const NotFound = () => {
                 >
                   <Link 
                     to="/" 
-                    className="block w-full md:w-auto text-center bg-koyu-mavi hover:bg-blue-800 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg"
+                    className="inline-block text-center bg-koyu-kirmizi hover:bg-daha-koyu-kirmizi text-white font-medium py-3 px-6 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg"
                   >
-                    Ana Sayfaya Dön
+                    Zur Startseite
                   </Link>
-                  
-                  <div className="flex justify-center md:justify-start space-x-4 mt-6">
-                    <Link to="/makaleler" className="text-koyu-mavi hover:text-turkuaz transition-colors duration-300">
-                      Makaleler
-                    </Link>
-                    <span className="text-gray-300">|</span>
-                    <Link to="/iletisim" className="text-koyu-mavi hover:text-turkuaz transition-colors duration-300">
-                      İletişim
-                    </Link>
-                  </div>
                 </motion.div>
               </div>
               

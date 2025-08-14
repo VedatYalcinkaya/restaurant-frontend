@@ -63,10 +63,10 @@ const Navbar = () => {
                 onClick={closeMobileMenu}
               >
                  <div className="text-2xl md:text-3xl font-bold text-white">
-                   ESSZIMMER
+                   MiPueblo
                  </div>
                 <div className="hidden md:block text-sm text-acik-krem font-light tracking-widest">
-                  KÖLN
+                  Köln
                 </div>
               </Link>
             </div>

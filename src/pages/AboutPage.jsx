@@ -21,7 +21,7 @@ const AboutPage = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl text-gray-700 max-w-3xl mx-auto"
           >
-            Willkommen im Esszimmer Köln - wo kulinarische Leidenschaft auf Gemütlichkeit trifft
+            Willkommen im MiPueblo Köln - wo kulinarische Leidenschaft auf Gemütlichkeit trifft
           </motion.p>
         </div>
       </section>
@@ -39,7 +39,7 @@ const AboutPage = () => {
                 Unsere Geschichte
               </h2>
               <p className="text-gray-600 mb-4">
-                Das Esszimmer Köln ist mehr als nur ein Restaurant - es ist ein Ort, an dem sich Menschen begegnen, 
+                MiPueblo Köln ist mehr als nur ein Restaurant - es ist ein Ort, an dem sich Menschen begegnen, 
                 um außergewöhnliche kulinarische Momente zu erleben. Seit unserer Eröffnung haben wir uns der Mission 
                 verschrieben, weniger Alltag und mehr Außergewöhnliches in die Herzen und auf die Teller unserer Gäste zu bringen.
               </p>
@@ -153,7 +153,7 @@ const AboutPage = () => {
                 name: "Anna Müller",
                 position: "Serviceleitung",
                 description: "Anna sorgt dafür, dass Sie sich bei uns wie zu Hause fühlen und einen unvergesslichen Abend erleben.",
-                image: "https://images.unsplash.com/photo-1594824680330-10c72d3e6088?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                image: "https://msastrg.blob.core.windows.net/msaimages/cms/block/item/image/694.jpg"
               },
               {
                 name: "Tom Schmidt",
@@ -203,7 +203,7 @@ const AboutPage = () => {
               Besuchen Sie uns
             </h2>
             <p className="text-white/90 mb-8 text-lg">
-              Wir freuen uns darauf, Sie in unserem Esszimmer begrüßen zu dürfen
+              Wir freuen uns darauf, Sie in MiPueblo begrüßen zu dürfen
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="bg-white text-koyu-kahve hover:bg-krem px-8 py-3 rounded-lg font-medium transition-colors duration-300">

@@ -26,12 +26,12 @@ const JobDetailPage = () => {
 
   useEffect(() => {
     if (applySuccess) {
-      toast.success('Başvurunuz alındı');
+      toast.success('Bewerbung eingegangen');
       setForm({ applicantName: '', email: '', phone: '', coverLetter: '', gdprConsent: false, resumeFile: null });
       dispatch(clearApplyState());
     }
     if (applyError) {
-      toast.error(typeof applyError === 'string' ? applyError : 'Başvuru gönderilemedi');
+      toast.error(typeof applyError === 'string' ? applyError : 'Bewerbung konnte nicht gesendet werden');
       dispatch(clearApplyState());
     }
   }, [applySuccess, applyError, dispatch]);
@@ -39,7 +39,7 @@ const JobDetailPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.gdprConsent) {
-      toast.error('KVKK onayını işaretlemelisiniz');
+      toast.error('Bitte Datenschutz zustimmen');
       return;
     }
     const applicationData = {
@@ -62,7 +62,7 @@ const JobDetailPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-acik-krem py-12">
+    <div className="min-h-screen bg-gradient-to-b from-white to-acik-krem/50 py-16">
       <div className="max-w-4xl mx-auto px-4">
         {job ? (
           <div className="bg-white rounded-xl shadow p-6">
@@ -73,56 +73,56 @@ const JobDetailPage = () => {
             </div>
             {job.requirements && (
               <div className="mb-4 whitespace-pre-line">
-                <h3 className="font-semibold text-koyu-kahve">Aranan Nitelikler</h3>
+                <h3 className="font-semibold text-koyu-kahve">Anforderungen</h3>
                 <p className="text-gray-700">{job.requirements}</p>
               </div>
             )}
             {job.benefits && (
               <div className="mb-6 whitespace-pre-line">
-                <h3 className="font-semibold text-koyu-kahve">Yan Haklar</h3>
+                <h3 className="font-semibold text-koyu-kahve">Vorteile</h3>
                 <p className="text-gray-700">{job.benefits}</p>
               </div>
             )}
 
-            <h2 className="text-2xl font-bold text-koyu-kahve mb-4">Başvuru Formu</h2>
+            <h2 className="text-2xl font-bold text-koyu-kahve mb-4">Bewerbungsformular</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm text-gray-700 mb-1">Ad Soyad</label>
+                  <label className="block text-sm text-gray-700 mb-1">Name</label>
                   <input className="w-full border rounded px-3 py-2" value={form.applicantName} onChange={(e)=>setForm({...form, applicantName:e.target.value})} required minLength={2} maxLength={120} />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-700 mb-1">E-posta</label>
+                  <label className="block text-sm text-gray-700 mb-1">E‑Mail</label>
                   <input type="email" className="w-full border rounded px-3 py-2" value={form.email} onChange={(e)=>setForm({...form, email:e.target.value})} required />
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm text-gray-700 mb-1">Telefon (opsiyonel)</label>
+                  <label className="block text-sm text-gray-700 mb-1">Telefon (optional)</label>
                   <input className="w-full border rounded px-3 py-2" value={form.phone} onChange={(e)=>setForm({...form, phone:e.target.value})} maxLength={25} />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-700 mb-1">CV (PDF/DOC/DOCX - max 20MB)</label>
+                  <label className="block text-sm text-gray-700 mb-1">Lebenslauf (PDF/DOC/DOCX - max 20MB)</label>
                   <input type="file" accept=".pdf,.doc,.docx" onChange={(e)=>setForm({...form, resumeFile:e.target.files?.[0] || null})} className="w-full" />
                 </div>
               </div>
               <div>
-                <label className="block text-sm text-gray-700 mb-1">Ön yazı (opsiyonel)</label>
+                <label className="block text-sm text-gray-700 mb-1">Motivationsschreiben (optional)</label>
                 <textarea className="w-full border rounded px-3 py-2" rows={4} value={form.coverLetter} onChange={(e)=>setForm({...form, coverLetter:e.target.value})} maxLength={2000} />
               </div>
               <label className="inline-flex items-center">
                 <input type="checkbox" checked={form.gdprConsent} onChange={(e)=>setForm({...form, gdprConsent:e.target.checked})} className="mr-2" />
-                KVKK Aydınlatma metnini okudum ve onaylıyorum
+                Ich habe die Datenschutzhinweise gelesen und stimme zu
               </label>
               <div>
                 <button type="submit" disabled={applying} className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded">
-                  {applying ? 'Gönderiliyor...' : 'Başvur'}
+                  {applying ? 'Wird gesendet...' : 'Bewerben'}
                 </button>
               </div>
             </form>
           </div>
         ) : (
-          <div className="text-center text-gray-600">Yükleniyor...</div>
+          <div className="text-center text-gray-600">Wird geladen...</div>
         )}
       </div>
     </div>

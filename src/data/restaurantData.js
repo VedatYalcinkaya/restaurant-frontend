@@ -1,6 +1,6 @@
 // Basit restoran veri yapısı - Backend'den yemekler çekilecek
 export const restaurantInfo = {
-  name: "Esszimmer Köln",
+  name: "MiPueblo Köln",
   description: "Weniger Alltag, mehr Außergewöhnliches - im Esszimmer Köln.",
   location: "Köln, Deutschland",
   phone: "+49 221 123 456",

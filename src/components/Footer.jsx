@@ -15,8 +15,8 @@ const Footer = () => {
             {/* Restaurant Bilgileri */}
             <div className="lg:col-span-2">
               <div className="mb-6">
-                <h2 className="text-3xl font-bold text-white mb-2">ESSZIMMER</h2>
-                <p className="text-acik-krem text-lg font-light tracking-wide">KÖLN</p>
+                <h2 className="text-3xl font-bold text-white mb-2">MiPueblo</h2>
+                <p className="text-acik-krem text-lg font-light tracking-wide">Köln</p>
               </div>
               <p className="text-acik-krem/90 mb-6 leading-relaxed">
                 Weniger Alltag, mehr Außergewöhnliches im Esszimmer Köln. 
@@ -95,10 +95,10 @@ const Footer = () => {
                 <div className="flex items-center space-x-3">
                   <FaEnvelope className="w-5 h-5 text-white flex-shrink-0" />
                   <a
-                    href="mailto:info@esszimmer-koeln.de"
+                    href="mailto:info@mipueblo.com"
                     className="text-acik-krem/90 hover:text-white transition-colors duration-300"
                   >
-                    info@esszimmer-koeln.de
+                    info@mipueblo.com
                   </a>
                 </div>
                 
@@ -122,7 +122,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center text-acik-krem/80">
             <div className="mb-4 md:mb-0">
-              <p>&copy; {currentYear} Esszimmer Köln. Alle Rechte vorbehalten.</p>
+              <p>&copy; {currentYear} MiPueblo Köln. Alle Rechte vorbehalten.</p>
             </div>
             <div className="flex space-x-6 text-sm">
               <Link

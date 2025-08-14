@@ -64,6 +64,11 @@ const AdminPage = () => {
       href: "/admin/applications",
       icon: <IconListDetails className="h-5 w-5 shrink-0 text-gray-300" />
     },
+    {
+      label: 'İletişim Mesajları',
+      href: "/admin/contact-messages",
+      icon: <IconListDetails className="h-5 w-5 shrink-0 text-gray-300" />
+    },
   ];
 
   const quickLinks = [
@@ -107,7 +112,7 @@ const AdminPage = () => {
           </div>
         <div className="flex items-center space-x-4">
             <div className="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center">
-              <span className="font-medium text-white">E</span>
+              <span className="font-medium text-white">M</span>
             </div>
           </div>
         </div>
@@ -205,7 +210,7 @@ const Logo = ({ open }) => {
         initial={{ opacity: 1 }}
         animate={{ opacity: 1 }}
         className="font-medium whitespace-pre text-emerald-500 text-lg">
-        Esszimmer Köln
+        MiPueblo Köln
       </motion.span>
     </div>
   );
