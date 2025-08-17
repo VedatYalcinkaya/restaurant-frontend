@@ -173,7 +173,7 @@ const Contact = () => {
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-turkuaz focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-koyu-kirmizi focus:border-transparent transition-all"
                   placeholder="Name eingeben"
                   required
                 />
@@ -191,7 +191,7 @@ const Contact = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-turkuaz focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-koyu-kirmizi focus:border-transparent transition-all"
                   placeholder="E-Mail eingeben"
                   required
                 />
@@ -212,7 +212,7 @@ const Contact = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-turkuaz focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-koyu-kirmizi focus:border-transparent transition-all"
                   placeholder="Telefonnummer eingeben"
                 />
               </div>
@@ -229,7 +229,7 @@ const Contact = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-turkuaz focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-koyu-kirmizi focus:border-transparent transition-all"
                   placeholder="Betreff eingeben"
                 />
               </div>
@@ -248,7 +248,7 @@ const Contact = () => {
                 value={formData.message}
                 onChange={handleChange}
                 rows="5"
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-turkuaz focus:border-transparent transition-all"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-koyu-kirmizi focus:border-transparent transition-all"
                 placeholder="Nachricht eingeben..."
                 required
               ></textarea>
@@ -258,7 +258,7 @@ const Contact = () => {
               <button
                 type="submit"
                 disabled={formState.loading}
-                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-gradient-to-r from-koyu-mavi to-mavi hover:from-turkuaz hover:to-acik-mavi transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-70"
+                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-gradient-to-r from-koyu-kirmizi to-daha-koyu-kirmizi hover:from-koyu-kirmizi/90 hover:to-daha-koyu-kirmizi/90 transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-70"
               >
                 {formState.loading ? "Wird gesendet..." : "Senden"}
               </button>

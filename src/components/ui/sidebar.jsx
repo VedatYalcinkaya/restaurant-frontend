@@ -46,11 +46,11 @@ export const Sidebar = ({
   );
 };
 
-export const SidebarBody = (props) => {
+export const SidebarBody = ({ showMobileTrigger = true, ...props }) => {
   return (
     <>
       <DesktopSidebar {...props} />
-      <MobileSidebar {...(props)} />
+      <MobileSidebar {...props} showTrigger={showMobileTrigger} />
     </>
   );
 };
@@ -83,21 +83,25 @@ export const DesktopSidebar = ({
 export const MobileSidebar = ({
   className,
   children,
+  showTrigger = true,
   ...props
 }) => {
   const { open, setOpen } = useSidebar();
   return (
     <>
-      <div
-        className={cn(
-          "h-10 px-4 py-4 flex flex-row md:hidden  items-center justify-between bg-neutral-100 dark:bg-neutral-800 w-full"
+      <div className={cn("md:hidden w-full")}{...props}>
+        {showTrigger && (
+          <div
+            className={cn(
+              "h-10 px-4 py-4 flex flex-row items-center justify-between bg-neutral-100 dark:bg-neutral-800 w-full"
+            )}>
+            <div className="flex justify-end z-20 w-full">
+              <IconMenu2
+                className="text-neutral-800 dark:text-neutral-200"
+                onClick={() => setOpen(!open)} />
+            </div>
+          </div>
         )}
-        {...props}>
-        <div className="flex justify-end z-20 w-full">
-          <IconMenu2
-            className="text-neutral-800 dark:text-neutral-200"
-            onClick={() => setOpen(!open)} />
-        </div>
         <AnimatePresence>
           {open && (
             <motion.div

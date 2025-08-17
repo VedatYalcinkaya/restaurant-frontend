@@ -16,26 +16,22 @@ const Hero = () => {
     { 
       baslik: "Frühstück & Fine Dining", 
       aciklama: "Von einem gemütlichen Frühstück bis zu exquisitem Fine Dining",
-      icon: <FiCoffee className="w-10 h-10 mb-4 text-koyu-kirmizi" />,
-      link: "/menu"
+      icon: <FiCoffee className="w-10 h-10 text-koyu-kirmizi" />
     },
     { 
       baslik: "Moderne Küche", 
       aciklama: "Innovative Kreationen mit traditionellen deutschen Einflüssen",
-      icon: <FiStar className="w-10 h-10 mb-4 text-koyu-kirmizi" />,
-      link: "/menu"
+      icon: <FiStar className="w-10 h-10 text-koyu-kirmizi" />
     },
     { 
       baslik: "Frisch & Saisonal", 
       aciklama: "Täglich frische Zutaten aus der Region, saisonal und nachhaltig",
-      icon: <FiHeart className="w-10 h-10 mb-4 text-koyu-kirmizi" />,
-      link: "/about"
+      icon: <FiHeart className="w-10 h-10 text-koyu-kirmizi" />
     },
     { 
       baslik: "Aufmerksame Bedienung", 
       aciklama: "Unser erfahrenes Team sorgt für einen unvergesslichen Abend",
-      icon: <FiUsers className="w-10 h-10 mb-4 text-koyu-kirmizi" />,
-      link: "/about"
+      icon: <FiUsers className="w-10 h-10 text-koyu-kirmizi" />
     }
   ];
 
@@ -112,17 +108,18 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
             >
-              <Link 
-                to={feature.link}
+              <div 
                 className="block bg-white/70 backdrop-blur-sm shadow-lg p-8 rounded-xl transition-all duration-300 flex flex-col items-center text-center border border-white/20 h-full relative group overflow-hidden hover:shadow-xl hover:bg-white/90"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-acik-krem/50 to-acik-bej/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10">
-                  {feature.icon}
+                  <div className="flex justify-center mb-4">
+                    {feature.icon}
+                  </div>
                   <h3 className="text-lg font-semibold text-koyu-yesil mb-3">{feature.baslik}</h3>
                   <p className="text-gray-600 text-sm leading-relaxed">{feature.aciklama}</p>
                 </div>
-              </Link>
+              </div>
             </motion.div>
           ))}
         </div>

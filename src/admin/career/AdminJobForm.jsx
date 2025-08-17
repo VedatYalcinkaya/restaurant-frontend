@@ -56,14 +56,14 @@ const AdminJobForm = () => {
       };
       if (isEdit) {
         await dispatch(updateJob({ id, payload })).unwrap();
-        toast.success('İlan güncellendi');
+        toast.success('Stellenanzeige aktualisiert');
       } else {
         await dispatch(createJob(payload)).unwrap();
-        toast.success('İlan oluşturuldu');
+        toast.success('Stellenanzeige erstellt');
       }
       navigate('/admin/jobs');
     } catch (err) {
-      toast.error(err?.response?.data?.message || err?.message || 'İşlem başarısız');
+      toast.error(err?.response?.data?.message || err?.message || 'Vorgang fehlgeschlagen');
     }
   };
 
@@ -74,61 +74,120 @@ const AdminJobForm = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white mb-6">{isEdit ? 'İlanı Düzenle' : 'Yeni İlan'}</h1>
+      <h1 className="text-2xl font-bold text-white mb-6">
+        {isEdit ? 'Stellenanzeige bearbeiten' : 'Neue Stellenanzeige'}
+      </h1>
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Başlık</label>
-            <input name="title" value={form.title} onChange={handleChange} required minLength={2} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
+            <label className="block text-sm text-gray-300 mb-1">Titel</label>
+            <input
+              name="title"
+              value={form.title}
+              onChange={handleChange}
+              required
+              minLength={2}
+              className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white"
+            />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-gray-300 mb-1">Bölüm</label>
-              <input name="department" value={form.department} onChange={handleChange} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
+              <label className="block text-sm text-gray-300 mb-1">Abteilung</label>
+              <input
+                name="department"
+                value={form.department}
+                onChange={handleChange}
+                className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white"
+              />
             </div>
             <div>
-              <label className="block text-sm text-gray-300 mb-1">Lokasyon</label>
-              <input name="location" value={form.location} onChange={handleChange} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
+              <label className="block text-sm text-gray-300 mb-1">Ort</label>
+              <input
+                name="location"
+                value={form.location}
+                onChange={handleChange}
+                className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white"
+              />
             </div>
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Çalışma Türü</label>
-            <select name="employmentType" value={form.employmentType} onChange={handleChange} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white">
-              <option value="FULL_TIME">Tam Zamanlı</option>
-              <option value="PART_TIME">Yarı Zamanlı</option>
-              <option value="INTERNSHIP">Staj</option>
-              <option value="CONTRACT">Sözleşmeli</option>
+            <label className="block text-sm text-gray-300 mb-1">Beschäftigungsart</label>
+            <select
+              name="employmentType"
+              value={form.employmentType}
+              onChange={handleChange}
+              className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white"
+            >
+              <option value="FULL_TIME">Vollzeit</option>
+              <option value="PART_TIME">Teilzeit</option>
+              <option value="INTERNSHIP">Praktikum</option>
+              <option value="CONTRACT">Befristet</option>
             </select>
           </div>
         </div>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Açıklama</label>
-            <textarea name="description" value={form.description} onChange={handleChange} rows={5} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
+            <label className="block text-sm text-gray-300 mb-1">Beschreibung</label>
+            <textarea
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              rows={5}
+              className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white"
+            />
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Nitelikler</label>
-            <textarea name="requirements" value={form.requirements} onChange={handleChange} rows={4} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
+            <label className="block text-sm text-gray-300 mb-1">Anforderungen</label>
+            <textarea
+              name="requirements"
+              value={form.requirements}
+              onChange={handleChange}
+              rows={4}
+              className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white"
+            />
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Yan Haklar</label>
-            <textarea name="benefits" value={form.benefits} onChange={handleChange} rows={3} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
+            <label className="block text-sm text-gray-300 mb-1">Leistungen</label>
+            <textarea
+              name="benefits"
+              value={form.benefits}
+              onChange={handleChange}
+              rows={3}
+              className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white"
+            />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-gray-300 mb-1">Sıra</label>
-              <input type="number" name="displayOrder" value={form.displayOrder} onChange={handleChange} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
+              <label className="block text-sm text-gray-300 mb-1">Reihenfolge</label>
+              <input
+                type="number"
+                name="displayOrder"
+                value={form.displayOrder}
+                onChange={handleChange}
+                className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white"
+              />
             </div>
             <div className="flex items-end">
               <label className="inline-flex items-center text-gray-300">
-                <input type="checkbox" name="active" checked={form.active} onChange={handleChange} className="mr-2" />
-                Aktif
+                <input
+                  type="checkbox"
+                  name="active"
+                  checked={form.active}
+                  onChange={handleChange}
+                  className="mr-2"
+                />
+                Aktiv
               </label>
             </div>
           </div>
         </div>
         <div className="md:col-span-2">
-          <button type="submit" className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg">{isEdit ? 'Güncelle' : 'Oluştur'}</button>
+          <button
+            type="submit"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg"
+          >
+            {isEdit ? 'Aktualisieren' : 'Erstellen'}
+          </button>
         </div>
       </form>
     </div>
@@ -136,5 +195,3 @@ const AdminJobForm = () => {
 };
 
 export default AdminJobForm;
-
-

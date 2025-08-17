@@ -66,25 +66,25 @@ const JobDetailPage = () => {
       <div className="max-w-4xl mx-auto px-4">
         {job ? (
           <div className="bg-white rounded-xl shadow p-6">
-            <h1 className="text-3xl font-bold text-koyu-kahve mb-2">{job.title}</h1>
+            <h1 className="text-3xl font-bold text-koyu-yesil mb-2">{job.title}</h1>
             <div className="text-gray-600 mb-4">{job.department} • {job.location} • {job.employmentType}</div>
             <div className="prose max-w-none mb-6 whitespace-pre-line">
               {job.description}
             </div>
             {job.requirements && (
               <div className="mb-4 whitespace-pre-line">
-                <h3 className="font-semibold text-koyu-kahve">Anforderungen</h3>
+                <h3 className="font-semibold text-koyu-yesil">Anforderungen</h3>
                 <p className="text-gray-700">{job.requirements}</p>
               </div>
             )}
             {job.benefits && (
               <div className="mb-6 whitespace-pre-line">
-                <h3 className="font-semibold text-koyu-kahve">Vorteile</h3>
+                <h3 className="font-semibold text-koyu-yesil">Vorteile</h3>
                 <p className="text-gray-700">{job.benefits}</p>
               </div>
             )}
 
-            <h2 className="text-2xl font-bold text-koyu-kahve mb-4">Bewerbungsformular</h2>
+            <h2 className="text-2xl font-bold text-koyu-yesil mb-4">Bewerbungsformular</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -103,7 +103,20 @@ const JobDetailPage = () => {
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-1">Lebenslauf (PDF/DOC/DOCX - max 20MB)</label>
-                  <input type="file" accept=".pdf,.doc,.docx" onChange={(e)=>setForm({...form, resumeFile:e.target.files?.[0] || null})} className="w-full" />
+                  <div className="flex items-center gap-3">
+                    <input id="resumeFile" type="file" accept=".pdf,.doc,.docx" onChange={(e)=>setForm({...form, resumeFile:e.target.files?.[0] || null})} className="hidden" />
+                    <label htmlFor="resumeFile" className="inline-flex items-center bg-koyu-kirmizi hover:bg-daha-koyu-kirmizi text-white px-4 py-2 rounded cursor-pointer">
+                      Datei auswählen
+                    </label>
+                    <span className="text-gray-600 text-sm truncate max-w-[200px]">
+                      {form.resumeFile ? form.resumeFile.name : 'Keine Datei ausgewählt'}
+                    </span>
+                    {form.resumeFile && (
+                      <button type="button" onClick={()=>setForm({...form, resumeFile:null})} className="text-gray-500 hover:text-red-600 text-sm">
+                        Entfernen
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
               <div>

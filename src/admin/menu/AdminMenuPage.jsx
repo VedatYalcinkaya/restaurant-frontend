@@ -38,14 +38,14 @@ const AdminMenuPage = () => {
         await dispatch(activateMenu(menu.id)).unwrap();
       }
     } finally {
-      // Değişiklik sonrası listeyi tazele
+      // Nach Änderung Liste neu laden
       dispatch(listMenusPaginated({ page: 0, size: 10 }));
       dispatch(listAllMenus());
     }
   };
 
   const handleDelete = async (id) => {
-    if (confirm('Silmek istediğinize emin misiniz?')) {
+    if (confirm('Sind Sie sicher, dass Sie löschen möchten?')) {
       await dispatch(deleteMenu(id));
     }
   };
@@ -53,9 +53,12 @@ const AdminMenuPage = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-white">Menüler</h1>
-        <Link to="/admin/menus/new" className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
-          <IconPlus className="h-5 w-5 mr-2" /> Yeni Menü
+        <h1 className="text-2xl font-bold text-white">Menüs</h1>
+        <Link
+          to="/admin/menus/new"
+          className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center transition-colors"
+        >
+          <IconPlus className="h-5 w-5 mr-2" /> Neues Menü
         </Link>
       </div>
 
@@ -64,7 +67,7 @@ const AdminMenuPage = () => {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Menü ara..."
+            placeholder="Menü suchen..."
             className="w-full bg-gray-700 border border-gray-600 rounded-lg pl-3 pr-10 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
           <div className="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -79,17 +82,17 @@ const AdminMenuPage = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-12 text-gray-400">Kayıt bulunamadı</div>
+          <div className="text-center py-12 text-gray-400">Keine Einträge gefunden</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-700">
                 <tr>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Görsel</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Ad</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Fiyat</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Durum</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">İşlemler</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Bild</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Name</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Preis</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Status</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Aktionen</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-700">
@@ -97,28 +100,48 @@ const AdminMenuPage = () => {
                   <tr key={m.id} className="hover:bg-gray-750">
                     <td className="py-3 px-4">
                       <div className="w-12 h-12 bg-gray-600 rounded overflow-hidden">
-                        {m.imageUrl && <img src={m.imageUrl} alt={m.name} className="w-12 h-12 object-cover" />}
+                        {m.imageUrl && (
+                          <img src={m.imageUrl} alt={m.name} className="w-12 h-12 object-cover" />
+                        )}
                       </div>
                     </td>
                     <td className="py-3 px-4 text-white">
                       <div className="font-medium">{m.name}</div>
                       <div className="text-xs text-gray-400">#{m.id}</div>
                     </td>
-                    <td className="py-3 px-4 text-gray-300">{m.price} €</td>
+                    <td className="py-3 px-4 text-gray-300">
+                      {m.price} €
+                    </td>
                     <td className="py-3 px-4">
-                      <span className={`px-2 py-1 rounded-full text-xs ${m.active ? 'bg-emerald-500/20 text-emerald-500' : 'bg-red-500/20 text-red-500'}`}>
-                        {m.active ? 'Aktif' : 'Pasif'}
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs ${
+                          m.active ? 'bg-emerald-500/20 text-emerald-500' : 'bg-red-500/20 text-red-500'
+                        }`}
+                      >
+                        {m.active ? 'Aktiv' : 'Inaktiv'}
                       </span>
                     </td>
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
-                        <button onClick={() => handleToggleActive(m)} className="p-1.5 rounded-lg bg-yellow-500/20 text-yellow-500 hover:bg-yellow-500/30" title="Durum Değiştir">
+                        <button
+                          onClick={() => handleToggleActive(m)}
+                          className="p-1.5 rounded-lg bg-yellow-500/20 text-yellow-500 hover:bg-yellow-500/30"
+                          title="Status ändern"
+                        >
                           {m.active ? <IconToggleLeft className="h-5 w-5" /> : <IconToggleRight className="h-5 w-5" />}
                         </button>
-                        <button onClick={() => navigate(`/admin/menus/edit/${m.id}`)} className="p-1.5 rounded-lg bg-blue-500/20 text-blue-500 hover:bg-blue-500/30" title="Düzenle">
+                        <button
+                          onClick={() => navigate(`/admin/menus/edit/${m.id}`)}
+                          className="p-1.5 rounded-lg bg-blue-500/20 text-blue-500 hover:bg-blue-500/30"
+                          title="Bearbeiten"
+                        >
                           <IconEdit className="h-5 w-5" />
                         </button>
-                        <button onClick={() => handleDelete(m.id)} className="p-1.5 rounded-lg bg-red-500/20 text-red-500 hover:bg-red-500/30" title="Sil">
+                        <button
+                          onClick={() => handleDelete(m.id)}
+                          className="p-1.5 rounded-lg bg-red-500/20 text-red-500 hover:bg-red-500/30"
+                          title="Löschen"
+                        >
                           <IconTrash className="h-5 w-5" />
                         </button>
                       </div>
@@ -135,5 +158,3 @@ const AdminMenuPage = () => {
 };
 
 export default AdminMenuPage;
-
-

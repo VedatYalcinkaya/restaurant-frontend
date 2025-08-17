@@ -14,58 +14,59 @@ import {
   IconWorld,
   IconSettings,
   IconListDetails,
-  IconCalendarTime
+  IconCalendarTime,
+  IconMenu2
 } from '@tabler/icons-react';
 
 const AdminPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
       await dispatch(logout()).unwrap();
-      toast.success('Başarıyla çıkış yapıldı');
+      toast.success('Erfolgreich abgemeldet'); // Başarıyla çıkış yapıldı
       navigate('/login');
     } catch (error) {
-      toast.error('Çıkış yapılırken bir hata oluştu');
+      toast.error('Fehler beim Abmelden'); // Çıkış yapılırken bir hata oluştu
       console.error('Logout error:', error);
     }
   };
 
   const mainLinks = [
     {
-      label: 'Kontrol Paneli',
+      label: 'Kontrollzentrum', // Kontrol Paneli
       href: "/admin",
       icon: <IconDashboard className="h-5 w-5 shrink-0 text-gray-300" />
     },
     {
-      label: 'Menüler',
+      label: 'Menüs', // Menüler
       href: "/admin/menus",
       icon: <IconChefHat className="h-5 w-5 shrink-0 text-gray-300" />
     },
     {
-      label: 'İş İlanları',
+      label: 'Stellenangebote', // İş İlanları
       href: "/admin/jobs",
       icon: <IconListDetails className="h-5 w-5 shrink-0 text-gray-300" />
     },
     {
-      label: 'Kategoriler',
+      label: 'Kategorien', // Kategoriler
       href: "/admin/categories",
       icon: <IconCategory className="h-5 w-5 shrink-0 text-gray-300" />
     },
     {
-      label: 'Rezervasyonlar',
+      label: 'Reservierungen', // Rezervasyonlar
       href: "/admin/reservations",
       icon: <IconCalendarTime className="h-5 w-5 shrink-0 text-gray-300" />
     },
     {
-      label: 'Başvurular',
+      label: 'Bewerbungen', // Başvurular
       href: "/admin/applications",
       icon: <IconListDetails className="h-5 w-5 shrink-0 text-gray-300" />
     },
     {
-      label: 'İletişim Mesajları',
+      label: 'Kontaktanfragen', // İletişim Mesajları
       href: "/admin/contact-messages",
       icon: <IconListDetails className="h-5 w-5 shrink-0 text-gray-300" />
     },
@@ -73,12 +74,12 @@ const AdminPage = () => {
 
   const quickLinks = [
     {
-      label: 'Yeni Menü',
+      label: 'Neues Menü', // Yeni Menü
       href: "/admin/menus/new",
       icon: <IconListDetails className="h-5 w-5 shrink-0 text-gray-300" />
     },
     {
-      label: 'Yeni Kategori',
+      label: 'Neue Kategorie', // Yeni Kategori
       href: "/admin/categories/new",
       icon: <IconCategory className="h-5 w-5 shrink-0 text-gray-300" />
     }
@@ -86,17 +87,17 @@ const AdminPage = () => {
 
   const additionalLinks = [
     {
-      label: 'Siteyi Görüntüle',
+      label: 'Website ansehen', // Siteyi Görüntüle
       href: "/",
       icon: <IconWorld className="h-5 w-5 shrink-0 text-gray-300" />
     },
     {
-      label: 'Ayarlar',
+      label: 'Einstellungen', // Ayarlar
       href: "#",
       icon: <IconSettings className="h-5 w-5 shrink-0 text-gray-300" />
     },
     {
-      label: 'Çıkış Yap',
+      label: 'Abmelden', // Çıkış Yap
       onClick: handleLogout,
       icon: <IconLogout className="h-5 w-5 shrink-0 text-gray-300" />
     }
@@ -108,9 +109,16 @@ const AdminPage = () => {
       <header className="bg-gray-800 shadow-lg border-b border-gray-700 py-3 px-6 z-10">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-3">
+            <button
+              className="md:hidden p-2 rounded-md hover:bg-gray-700 text-gray-200"
+              onClick={() => setOpen(true)}
+              aria-label="Menü öffnen"
+            >
+              <IconMenu2 size={22} />
+            </button>
             <Logo open={true} />
           </div>
-        <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4">
             <div className="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center">
               <span className="font-medium text-white">M</span>
             </div>
@@ -118,24 +126,24 @@ const AdminPage = () => {
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden flex-col md:flex-row">
         {/* Sidebar */}
-        <Sidebar open={true} setOpen={() => {}} animate={false}>
-          <SidebarBody className="justify-between gap-10 py-4 bg-gray-800 h-full">
+        <Sidebar open={open} setOpen={setOpen} animate={false}>
+          <SidebarBody className="justify-between gap-10 py-4 bg-gray-800 h-full" showMobileTrigger={false}>
             <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
               <div className="mt-2 flex flex-col gap-2 px-2">
                 {mainLinks.map((link, idx) => (
-                  <CustomSidebarLink key={idx} link={link} />
+                  <CustomSidebarLink key={idx} link={link} onNavigate={() => setOpen(false)} />
                 ))}
               </div>
               
               <div className="mt-8 px-2">
                 <span className="text-xs px-2 font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                  Hızlı Erişim
+                  Schneller Zugriff {/* Hızlı Erişim */}
                 </span>
                 <div className="mt-2 flex flex-col gap-2">
                   {quickLinks.map((link, idx) => (
-                    <CustomSidebarLink key={idx} link={link} />
+                    <CustomSidebarLink key={idx} link={link} onNavigate={() => setOpen(false)} />
                   ))}
                 </div>
               </div>
@@ -144,7 +152,7 @@ const AdminPage = () => {
             <div className="mt-auto px-2">
               <div className="flex flex-col gap-2">
                 {additionalLinks.map((link, idx) => (
-                  <CustomSidebarLink key={idx} link={link} />
+                  <CustomSidebarLink key={idx} link={link} onNavigate={() => setOpen(false)} />
                 ))}
               </div>
             </div>
@@ -162,11 +170,14 @@ const AdminPage = () => {
   );
 };
 
-const CustomSidebarLink = ({ link }) => {
+const CustomSidebarLink = ({ link, onNavigate }) => {
   if (link.onClick) {
     return (
       <button
-        onClick={link.onClick}
+        onClick={() => {
+          link.onClick();
+          if (onNavigate) onNavigate();
+        }}
         className="flex items-center rounded-lg px-3 py-2 transition-colors duration-200 text-gray-300 hover:bg-gray-700/50 hover:text-white w-full text-left"
       >
         <div className="text-gray-400">
@@ -189,6 +200,7 @@ const CustomSidebarLink = ({ link }) => {
             : "text-gray-300 hover:bg-gray-700/50 hover:text-white"
         )
       }
+      onClick={() => onNavigate && onNavigate()}
     >
       {({ isActive }) => (
         <>
@@ -216,4 +228,4 @@ const Logo = ({ open }) => {
   );
 };
 
-export default AdminPage; 
+export default AdminPage;
