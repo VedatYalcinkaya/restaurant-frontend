@@ -1,35 +1,28 @@
-# Bireysel bir avukat için - Hukuk Bürosu Web Sitesi
+# MiPueblo Köln – Restaurant Frontend
 
-Av. Emre Okur'un profesyonel hukuk bürosu web sitesi için geliştirilen React projesi.
+MiPueblo Köln restoranı için geliştirilen modern, yönetim panelli React arayüzü. Proje; ziyaretçi tarafında menüler, rezervasyon ve kariyer içeriklerini sunarken, yönetim panelinde menü/kategori yönetimi, rezervasyonlar, iş ilanları ve iletişim mesajlarını yönetmeye olanak tanır.
 
 ## Özellikler
 
-- Modern ve profesyonel tasarım
-- Mobil uyumlu (responsive) arayüz
-- Animasyonlu bileşenler
-- Uzmanlık alanları bölümü
-- Hakkında sayfası
-- İletişim sayfası
+- Ziyaretçi arayüzü ve ana sayfa akışı
+- Menü ve kategori yönetimi (admin)
+- Rezervasyon yönetimi (admin)
+- Kariyer ilanları ve başvurular (admin)
+- İletişim mesajları yönetimi (admin)
+- Rol bazlı yetkilendirme ve oturum yönetimi
 
-## Kullanılan Teknolojiler
+## Teknolojiler
 
-- React
+- React 19
 - Vite
-- Tailwind CSS
-- Framer Motion
+- Redux Toolkit
 - React Router
+- Tailwind CSS
+- Axios
 
 ## Kurulum
 
-Projeyi lokal olarak çalıştırmak için aşağıdaki adımları izleyin:
-
 ```bash
-# Projeyi klonlayın
-git clone https://github.com/VedatYalcinkaya/emre-okur-frontend.git
-
-# Proje dizinine girin
-cd emre-okur-frontend
-
 # Bağımlılıkları yükleyin
 npm install
 
@@ -37,16 +30,36 @@ npm install
 npm run dev
 ```
 
-## Bileşenler
+## Ortam Değişkenleri
 
-- **Navbar**: Üst gezinme menüsü
-- **Hero**: Ana sayfa karşılama bölümü
-- **AboutMe**: Avukat hakkında bilgi ve kariyer zaman çizelgesi
-- **Footer**: Alt bilgi bölümü
+Uygulama varsayılan olarak `http://localhost:8082/api/v1` API adresini kullanır. Farklı bir backend adresi için aşağıdaki değişkeni tanımlayın:
 
-## Katkıda Bulunma
+```bash
+VITE_API_URL=https://example.com/api/v1
+```
 
-Katkıda bulunmak isterseniz, lütfen önce değişiklik yapmak istediğiniz konuyu tartışmak için bir konu açın.
+## Komutlar
+
+```bash
+# Geliştirme
+npm run dev
+
+# Prodüksiyon build
+npm run build
+
+# Lint
+npm run lint
+
+# Build önizleme
+npm run preview
+```
+
+## Proje Yapısı (Özet)
+
+- `src/pages`: Ziyaretçi sayfaları
+- `src/admin`: Yönetim paneli ekranları
+- `src/services`: API istemcisi ve servis katmanı
+- `src/store`: Redux store ve slice'lar
 
 ## Lisans
 
