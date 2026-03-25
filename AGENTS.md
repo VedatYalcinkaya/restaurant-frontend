@@ -2,33 +2,41 @@
 
 ## Kanonik Özet
 
-Bu repo, `Ala Söğüş` için geliştirilmiş tek paketli bir `Vite + React` frontend uygulamasıdır. Aynı kod tabanında hem public restoran sitesi hem de giriş korumalı admin paneli bulunur.
+Bu repo, `Ala Söğüş` için geliştirilen `Vite + React` tabanlı bir frontend uygulamasıdır. Tek kod tabanında iki ana yüz bulunur:
 
-- Public taraf: ana sayfa, menü, hakkımızda, rezervasyon, iletişim, kariyer ve ilan detayları
-- Admin taraf: menü, kategori, rezervasyon, iş ilanı, başvuru ve iletişim mesajı yönetimi
-- State yönetimi: `Redux Toolkit`
+- Public restoran sitesi
+- Giriş ve rol kontrolü ile korunan admin paneli
+
+Ana teknik yapı:
+
+- UI: `React 19`
+- Build: `Vite`
+- State: `Redux Toolkit`
 - Routing: `react-router-dom`
-- API katmanı: token yenilemeli `axios` istemcisi
-- Stil altyapısı: `Tailwind CSS v4` + proje içi tema değişkenleri
+- API: `axios`
+- Stil: `Tailwind CSS v4`
 
-Not: Kök dizindeki mevcut `README.md` eski bir hukuk bürosu projesini tarif ediyor; bu repo gerçekte restoran + admin paneli frontend’idir.
+## Dokümantasyon Rolleri
+
+- `README.md`: public repo için kısa proje özeti, kurulum ve temel çalışma bilgileri
+- `AGENTS.md`: yeni sohbette hızlı yön bulmak için mimari ve dosya haritası
 
 ## Önce Buraya Bak
 
-Yeni bir sohbette kodu hızlı bulmak için önce şu dosyalara bak:
+Yeni bir görevde ilk açılacak dosyalar:
 
-- `src/main.jsx`: uygulama bootstrap, `Redux Provider`, `BrowserRouter`
-- `src/App.jsx`: üst seviye route kompozisyonu, toaster, admin route koruması, açılışta `checkAuthStatus()`
-- `src/Dashboard.jsx`: public site shell, navbar + footer + public route ağacı
-- `src/admin/AdminPage.jsx`: admin shell, sidebar, logout akışı, adminden public siteye geçiş linki, `<Outlet />`
+- `src/main.jsx`: bootstrap, `Provider`, `BrowserRouter`
+- `src/App.jsx`: üst seviye route kompozisyonu
+- `src/Dashboard.jsx`: public site shell
+- `src/admin/AdminPage.jsx`: admin shell
 - `src/store/index.js`: aktif slice kayıtları
-- `src/services/api.js`: `VITE_API_URL`, `Authorization` header, refresh token akışı
+- `src/services/api.js`: API tabanı ve token/refresh akışı
 
 ## Route Haritası
 
 ### Public
 
-Public route ağacı `src/Dashboard.jsx` içinde tanımlı:
+Public route ağacı `src/Dashboard.jsx` içinde:
 
 - `/` -> `src/pages/HomePage.jsx`
 - `/menu` -> `src/pages/MenuPage.jsx`
@@ -39,13 +47,13 @@ Public route ağacı `src/Dashboard.jsx` içinde tanımlı:
 - `/careers/:id` -> `src/pages/JobDetailPage.jsx`
 - `*` -> `src/pages/NotFound.jsx`
 
-### Üst Seviye ve Admin
+### Admin ve Üst Seviye
 
 Üst seviye route ağacı `src/App.jsx` içinde:
 
-- `/*` -> public shell olarak `Dashboard + Footer`
+- `/*` -> `Dashboard + Footer`
 - `/login` -> `src/login/LoginPage.jsx`
-- `/admin` -> `RoleGuard` ile korunan admin alanı
+- `/admin` -> `RoleGuard` ile korunan alan
 - `/admin` index -> `src/admin/AdminDashboard.jsx`
 - `/admin/menus` -> `src/admin/menu/AdminMenuPage.jsx`
 - `/admin/menus/new` -> `src/admin/menu/AdminMenuForm.jsx`
@@ -62,23 +70,21 @@ Public route ağacı `src/Dashboard.jsx` içinde tanımlı:
 
 ## Klasör Sahipliği
 
-Kaynak kodun ana merkezi `src/` klasörüdür. Yeni işlerde genelde aşağıdaki eşleşme yeterlidir:
-
-- `src/pages`: public route ekranları
-- `src/components`: tekrar kullanılan public bileşenler ve ortak UI parçaları
-- `src/components/ui`: daha düşük seviye UI blokları, özellikle sidebar ve özel animasyon yardımcıları
-- `src/admin`: admin paneli ekranları ve domain bazlı admin sayfaları
+- `src/pages`: public ekranlar
+- `src/components`: ortak/public bileşenler
+- `src/components/ui`: düşük seviye UI parçaları
+- `src/admin`: admin ekranları
 - `src/login`: giriş ekranı
-- `src/store/slices`: domain bazlı async thunk, reducer, selector mantığı
+- `src/store/slices`: domain bazlı thunk/reducer/selector mantığı
 - `src/services`: API istemcisi
-- `src/guards`: auth ve rol tabanlı route koruma bileşenleri
-- `src/assets`: statik görseller/logolar
+- `src/guards`: route korumaları
+- `src/assets`: görseller ve statik varlıklar
 - `src/data`: sabit veri dosyaları
 - `src/utils`: yardımcı fonksiyonlar
 - `src/hooks`: custom hook’lar
 - `src/lib`: küçük yardımcı util’ler
 
-Genelde kaynak olmayan klasörler:
+Kaynak olmayan klasörler:
 
 - `dist/`: build çıktısı
 - `node_modules/`: bağımlılıklar
@@ -86,72 +92,79 @@ Genelde kaynak olmayan klasörler:
 
 ## State ve API Haritası
 
-Aktif slice kayıtları `src/store/index.js` içinde. Domain sahipliği şu şekilde:
+Aktif slice kayıtları `src/store/index.js` içindedir.
 
 - `authSlice` -> `/auth/*`
-  Giriş, çıkış, oturum kontrolü, kullanıcı doğrulama ve rol bilgisi.
-  Başlıca kullanım: `src/App.jsx`, `src/login/LoginPage.jsx`, `src/admin/AdminPage.jsx`, `src/guards/RoleGuard.jsx`, `src/components/Navbar.jsx`
+  Giriş, çıkış, oturum kontrolü, kullanıcı ve rol bilgisi
+  Kullanım: `src/App.jsx`, `src/login/LoginPage.jsx`, `src/admin/AdminPage.jsx`, `src/guards/RoleGuard.jsx`, `src/components/Navbar.jsx`
 - `menuSlice` -> `/menus`
-  Public menü listeleme ve admin menü CRUD/aktiflik/görsel yükleme.
-  Başlıca kullanım: `src/pages/MenuPage.jsx`, `src/admin/menu/*`, `src/admin/AdminDashboard.jsx`
+  Public menü listeleme + admin menü yönetimi
+  Kullanım: `src/pages/MenuPage.jsx`, `src/admin/menu/*`, `src/admin/AdminDashboard.jsx`
 - `menuCategorySlice` -> `/menu-categories`
-  Public kategori listeleme ve admin kategori CRUD/aktiflik yönetimi.
-  Başlıca kullanım: `src/pages/MenuPage.jsx`, `src/admin/category/*`, `src/admin/AdminDashboard.jsx`
+  Public kategori listeleme + admin kategori yönetimi
+  Kullanım: `src/pages/MenuPage.jsx`, `src/admin/category/*`, `src/admin/AdminDashboard.jsx`
 - `reservationSlice` -> `/reservations`
-  Public rezervasyon oluşturma ve admin rezervasyon listeleme/durum yönetimi.
-  Başlıca kullanım: `src/pages/ReservationPage.jsx`, `src/admin/reservation/AdminReservationPage.jsx`, `src/admin/AdminDashboard.jsx`
+  Public rezervasyon oluşturma + admin rezervasyon yönetimi
+  Kullanım: `src/pages/ReservationPage.jsx`, `src/admin/reservation/AdminReservationPage.jsx`, `src/admin/AdminDashboard.jsx`
 - `jobSlice` -> `/jobs`
-  Public kariyer ilanları ve admin iş ilanı yönetimi.
-  Başlıca kullanım: `src/pages/CareerPage.jsx`, `src/pages/JobDetailPage.jsx`, `src/admin/career/AdminJobsPage.jsx`, `src/admin/career/AdminJobForm.jsx`
+  Public kariyer listesi/detayı + admin ilan yönetimi
+  Kullanım: `src/pages/CareerPage.jsx`, `src/pages/JobDetailPage.jsx`, `src/admin/career/AdminJobsPage.jsx`, `src/admin/career/AdminJobForm.jsx`
 - `jobApplicationSlice` -> `/job-applications`
-  Kariyer başvurusu, CV yükleme, admin başvuru listeleme ve durum güncelleme.
-  Başlıca kullanım: `src/pages/JobDetailPage.jsx`, `src/admin/career/AdminJobApplicationsPage.jsx`
+  Başvuru oluşturma + admin başvuru yönetimi
+  Kullanım: `src/pages/JobDetailPage.jsx`, `src/admin/career/AdminJobApplicationsPage.jsx`
 - `contactSlice` -> `/contact-messages`
-  İletişim formu gönderimi, admin mesaj listeleme/okundu/yanıt/durum işlemleri.
-  Başlıca kullanım: `src/components/Contact.jsx`, `src/admin/contact/AdminContactMessagesPage.jsx`
+  İletişim formu + admin mesaj yönetimi
+  Kullanım: `src/components/Contact.jsx`, `src/admin/contact/AdminContactMessagesPage.jsx`
 
 ## Auth ve Oturum Akışı
 
 - Tokenlar `localStorage` içinde `accessToken` ve `refreshToken` olarak tutulur.
 - `src/App.jsx` açılışta `checkAuthStatus()` dispatch eder.
-- `src/services/api.js` tüm isteklerde varsa `Authorization: Bearer <token>` header’ını ekler.
-- 401 alınırsa `api.js` refresh token ile `/auth/refresh` çağrısı yapmayı dener.
-- Refresh başarısızsa local storage temizlenir ve kullanıcı `/login` sayfasına yönlendirilir.
+- `src/services/api.js` isteklerde `Authorization: Bearer <token>` ekler.
+- 401 durumunda refresh akışı çalışır.
+- Refresh başarısız olursa local storage temizlenir ve kullanıcı `/login` sayfasına yönlendirilir.
 - Admin alanı `src/guards/RoleGuard.jsx` ile korunur.
-- İzin verilen roller şu an `ADMIN` ve `EDITOR`.
-- `src/login/LoginPage.jsx` başarılı login sonrası varsayılan olarak `/admin` alanına döner.
-- Public navbar’da oturumu açık ve yetkili (`ADMIN` / `EDITOR`) kullanıcı için `Admin Panel` butonu görünür.
-- Admin panelindeki `Siteyi Görüntüle` bağlantısı public alanı aynı sekmede bozmak yerine yeni sekmede açar.
+- İzin verilen roller: `ADMIN`, `EDITOR`
+- Başarılı login sonrası varsayılan yön: `/admin`
+
+Son davranış notları:
+
+- `src/components/Navbar.jsx` içinde yetkili kullanıcı için `Admin Panel` butonu görünür.
+- `src/admin/AdminPage.jsx` içinde `Siteyi Görüntüle` bağlantısı public alanı yeni sekmede açar.
 
 ## Tasarım ve Tema Notları
 
-- Tema renklerinin ana kaynağı `src/index.css`.
-- Public tarafta kırmızı, kırık beyaz ve sıcak nötr tonlardan oluşan İngilizce isimli tema tokenları kullanılıyor:
+- Tema merkez dosyası: `src/index.css`
+- Public tarafta İngilizce isimli tema tokenları kullanılır:
   `brand-red`, `brand-red-deep`, `brand-red-soft`, `canvas`, `paper`, `blush`, `shell`, `ink`, `smoke`, `accent`
-- Admin paneli ayrı bir koyu tema diline sahip.
-- Animasyon importları kod tabanında karışık:
-  Bazı dosyalar `motion/react`, bazıları `framer-motion` kullanıyor.
-  Yeni iş yaparken önce ilgili dosyanın mevcut stilini takip et; standardizasyon ayrı bir refactor konusu olabilir.
+- Admin paneli ayrı koyu görsel dil kullanır.
+- Animasyon importları karışık yapıdadır:
+  Bazı dosyalar `motion/react`, bazıları `framer-motion` kullanır.
 
-## Dikkat Edilmesi Gerekenler
+## Temizlik Sonrası Notlar
 
-### Eski Kod Kalıntıları
+Bu repoda eski projelerden kalmış bazı dosyalar kaldırıldı. Yeni bir sohbette bunları aramaya gerek yok:
 
-Önceki cleanup turlarında aktif akışta görünmeyen eski proje kalıntılarının bir kısmı kaldırıldı. Benzer bir temizlik tekrar yapılacaksa önce `rg` ile gerçek import/route kullanımını doğrula; özellikle eski tema dili, yardımcı bileşenler ve kullanılmayan guard/hook parçaları bu repoda geçmişte birikmişti.
+- `src/components/AboutMe.jsx`
+- `src/components/AnimatedPage.jsx`
+- `src/components/ContactModal.jsx`
+- `src/components/FlipWordsDemo.jsx`
+- `src/components/Loader.jsx`
+- `src/components/ui/background-boxes.jsx`
+- `src/components/ui/timeline.jsx`
+- `src/data/restaurantData.js`
+- `src/guards/AuthGuard.jsx`
+- `src/hooks/useScrollToTop.js`
+- `src/utils/colorPalette.js`
+- `src/utils/dateUtils.js`
+- `src/App.css`
 
-### Repo İçinde Dikkat Çeken Diğer Noktalar
-
-- `README.md` güncel proje kimliğini yansıtmıyor.
-- Kod tabanında eski iterasyonlardan kalmış tema/dil izleri vardı; yeni değişikliklerde önce ilgili akışın güncel merkezi bulunmalı.
-- Public taraf için bir sorun araştırırken çoğu zaman başlangıç noktası `src/Dashboard.jsx` ve ilgili `src/pages/*` dosyalarıdır.
-- Admin taraf için bir sorun araştırırken çoğu zaman başlangıç noktası `src/App.jsx`, `src/admin/AdminPage.jsx` ve ilgili slice dosyalarıdır.
+Benzer bir temizlik tekrar yapılacaksa önce `rg` ile gerçek import ve route kullanımını doğrula.
 
 ## Hızlı Arama Rehberi
 
-Yeni bir görev geldiğinde genelde şu sırayı izlemek yeterlidir:
-
-1. Route mu, state mi, API mi sorunu olduğunu belirle.
+1. Sorunun route, state veya API tarafında mı olduğunu belirle.
 2. Route ise `src/App.jsx` veya `src/Dashboard.jsx` üzerinden ilgili sayfayı bul.
-3. Form/list data sorunuysa ilgili `src/store/slices/*Slice.js` dosyasını aç.
-4. İstek/kimlik doğrulama sorunuysa `src/services/api.js` ve `authSlice` tarafına bak.
-5. Admin UI ise `src/admin/*`, public UI ise `src/pages/*` ve `src/components/*` altında ilerle.
+3. Veri/form sorunuysa ilgili `src/store/slices/*Slice.js` dosyasına git.
+4. Auth veya istek sorunuysa `src/services/api.js` ve `authSlice` tarafına bak.
+5. Admin işi ise `src/admin/*`, public işi ise `src/pages/*` ve `src/components/*` altında ilerle.
