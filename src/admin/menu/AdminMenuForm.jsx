@@ -120,11 +120,11 @@ const AdminMenuForm = () => {
   const handleSelectFile = (file) => {
     if (!file) return;
     if (!file.type.startsWith('image/')) {
-      toast.error('Bitte wählen Sie eine Bilddatei aus');
+      toast.error('Lütfen bir görsel dosyası seçin');
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
-      toast.error('Das Bild darf nicht größer als 5MB sein');
+      toast.error('Görsel 5 MB boyutunu aşamaz');
       return;
     }
     setImageFile(file);
@@ -134,31 +134,31 @@ const AdminMenuForm = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white mb-6">{isEdit ? 'Menü bearbeiten' : 'Neues Menü'}</h1>
+      <h1 className="text-2xl font-bold text-white mb-6">{isEdit ? 'Menüyü Düzenle' : 'Yeni Menü'}</h1>
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Name</label>
+            <label className="block text-sm text-gray-300 mb-1">Ad</label>
             <input name="name" value={form.name} onChange={handleChange} required className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Beschreibung</label>
+            <label className="block text-sm text-gray-300 mb-1">Açıklama</label>
             <textarea name="description" value={form.description} onChange={handleChange} rows={4} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Preis (€)</label>
+            <label className="block text-sm text-gray-300 mb-1">Fiyat (EUR)</label>
             <input type="number" step="0.01" name="price" value={form.price} onChange={handleChange} required className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Zutaten</label>
+            <label className="block text-sm text-gray-300 mb-1">İçerikler</label>
             <input name="ingredients" value={form.ingredients} onChange={handleChange} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
           </div>
         </div>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Kategorie</label>
+            <label className="block text-sm text-gray-300 mb-1">Kategori</label>
             <select name="categoryId" value={form.categoryId} onChange={handleChange} required className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white">
-              <option value="">Bitte wählen</option>
+              <option value="">Lütfen seçin</option>
               {categories.map((c) => (
                 <option key={c.id} value={c.id}>{c.name}</option>
               ))}
@@ -166,57 +166,57 @@ const AdminMenuForm = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-gray-300 mb-1">Reihenfolge</label>
+              <label className="block text-sm text-gray-300 mb-1">Sıra</label>
               <input type="number" name="displayOrder" value={form.displayOrder} onChange={handleChange} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
             </div>
             <div>
-              <label className="block text-sm text-gray-300 mb-1">Kalorien</label>
+              <label className="block text-sm text-gray-300 mb-1">Kalori</label>
               <input type="number" name="calories" value={form.calories} onChange={handleChange} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-gray-300 mb-1">Zubereitung (Minuten)</label>
+              <label className="block text-sm text-gray-300 mb-1">Hazırlık (dakika)</label>
               <input type="number" name="preparationTimeMinutes" value={form.preparationTimeMinutes} onChange={handleChange} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
             </div>
             <div>
-              <label className="block text-sm text-gray-300 mb-1">Allergene</label>
+              <label className="block text-sm text-gray-300 mb-1">Alerjenler</label>
               <input name="allergens" value={form.allergens} onChange={handleChange} maxLength={100} className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white" />
             </div>
           </div>
           <div className="flex items-center gap-6">
             <label className="inline-flex items-center text-gray-300">
               <input type="checkbox" name="available" checked={form.available} onChange={handleChange} className="mr-2" />
-              Verfügbar
+              Uygun
             </label>
             <label className="inline-flex items-center text-gray-300">
               <input type="checkbox" name="active" checked={form.active} onChange={handleChange} className="mr-2" />
-              Aktiv
+              Aktif
             </label>
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-2">Bild</label>
+            <label className="block text-sm text-gray-300 mb-2">Görsel</label>
             <div className="flex items-start gap-4">
               <div className="w-28 h-28 bg-gray-700 border border-gray-600 rounded-lg overflow-hidden flex items-center justify-center">
                 {imagePreview ? (
-                  <img src={imagePreview} alt="Vorschau" className="w-full h-full object-cover" />
+                  <img src={imagePreview} alt="Ön izleme" className="w-full h-full object-cover" />
                 ) : (
-                  <span className="text-gray-400 text-xs">Vorschau</span>
+                  <span className="text-gray-400 text-xs">Ön izleme</span>
                 )}
               </div>
               <div className="space-y-2">
                 <label className="inline-block bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded cursor-pointer">
-                  Bild auswählen
+                  Görsel Seç
                   <input type="file" accept="image/*" onChange={(e) => handleSelectFile(e.target.files?.[0] || null)} className="hidden" />
                 </label>
                 {existingImageUrl && !imageFile && (
-                  <div className="text-xs text-gray-400">Vorhandenes Bild wird beibehalten.</div>
+                  <div className="text-xs text-gray-400">Mevcut görsel korunacak.</div>
                 )}
                 {imageFile && (
-                  <div className="text-xs text-gray-400">Ausgewählte Datei: {imageFile.name}</div>
+                  <div className="text-xs text-gray-400">Seçilen dosya: {imageFile.name}</div>
                 )}
                 {imagePreview && imageFile && (
-                  <button type="button" onClick={() => { setImageFile(null); setImagePreview(existingImageUrl || ''); }} className="text-xs text-red-400 hover:text-red-300">Auswahl entfernen</button>
+                  <button type="button" onClick={() => { setImageFile(null); setImagePreview(existingImageUrl || ''); }} className="text-xs text-red-400 hover:text-red-300">Seçimi Kaldır</button>
                 )}
               </div>
             </div>
@@ -224,7 +224,7 @@ const AdminMenuForm = () => {
         </div>
         <div className="md:col-span-2">
           <button type="submit" disabled={creating || updating} className="bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white px-6 py-2 rounded-lg">
-            {isEdit ? 'Aktualisieren' : 'Erstellen'}
+            {isEdit ? 'Güncelle' : 'Oluştur'}
           </button>
         </div>
       </form>

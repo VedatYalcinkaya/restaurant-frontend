@@ -1,40 +1,99 @@
 @import "tailwindcss";
 
-body, html {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  width: 100%;
+:root {
+  color-scheme: light;
 }
 
 @theme {
-  /* Genel tema değişkenleri */
-  --font-display: "Inter", sans-serif;
+  --font-sans: "Manrope", "Segoe UI", sans-serif;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
   --spacing: 0.25rem;
-  
-  /* Renk Paleti - Müşteri Seçimi (Doğal & Şık Tonlar) */
-  --color-koyu-yesil: #0A100D;
-  --color-acik-bej: #B9BAA3;
-  --color-acik-krem: #D6D5C9;
-  --color-koyu-kirmizi: #A22C29;
-  --color-daha-koyu-kirmizi: #902923;
+
+  --color-brand-red: #dc1f26;
+  --color-brand-red-deep: #a91016;
+  --color-brand-red-soft: #f06a63;
+  --color-canvas: #fff7f4;
+  --color-paper: #fffdfb;
+  --color-blush: #f4ddd8;
+  --color-shell: #ead0ca;
+  --color-ink: #1f1716;
+  --color-smoke: #6b5a56;
+  --color-accent: #c98a54;
 }
 
-/* Custom CSS Classes - Müşteri Renk Paleti */
-.bg-koyu-yesil { background-color: var(--color-koyu-yesil) !important; }
-.bg-acik-bej { background-color: var(--color-acik-bej) !important; }
-.bg-acik-krem { background-color: var(--color-acik-krem) !important; }
-.bg-koyu-kirmizi { background-color: var(--color-koyu-kirmizi) !important; }
-.bg-daha-koyu-kirmizi { background-color: var(--color-daha-koyu-kirmizi) !important; }
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
 
-.text-koyu-yesil { color: var(--color-koyu-yesil) !important; }
-.text-acik-bej { color: var(--color-acik-bej) !important; }
-.text-acik-krem { color: var(--color-acik-krem) !important; }
-.text-koyu-kirmizi { color: var(--color-koyu-kirmizi) !important; }
-.text-daha-koyu-kirmizi { color: var(--color-daha-koyu-kirmizi) !important; }
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at top, rgba(220, 31, 38, 0.14), transparent 34%),
+    linear-gradient(180deg, var(--color-paper) 0%, var(--color-canvas) 100%);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-.border-koyu-yesil { border-color: var(--color-koyu-yesil) !important; }
-.border-acik-bej { border-color: var(--color-acik-bej) !important; }
-.border-acik-krem { border-color: var(--color-acik-krem) !important; }
-.border-koyu-kirmizi { border-color: var(--color-koyu-kirmizi) !important; }
-.border-daha-koyu-kirmizi { border-color: var(--color-daha-koyu-kirmizi) !important; }
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+::selection {
+  background: rgba(220, 31, 38, 0.18);
+  color: var(--color-ink);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(220, 31, 38, 0.85), rgba(169, 16, 22, 0.9));
+  border: 3px solid var(--color-paper);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(220, 31, 38, 1), rgba(169, 16, 22, 1));
+}
+
+.site-footer {
+  box-shadow: 0 -24px 60px rgba(92, 13, 17, 0.12);
+}

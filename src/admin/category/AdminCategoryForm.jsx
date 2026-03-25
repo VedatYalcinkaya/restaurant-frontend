@@ -69,16 +69,13 @@ const AdminCategoryForm = () => {
 
   return (
     <div>
-      {/* Başlık */}
       <h1 className="text-2xl font-bold text-white mb-6">
-        {isEdit ? 'Kategorie bearbeiten' /* Kategori Düzenle */ : 'Neue Kategorie' /* Yeni Kategori */}
+        {isEdit ? 'Kategoriyi Düzenle' : 'Yeni Kategori'}
       </h1>
 
       <form onSubmit={handleSubmit} className="max-w-xl space-y-4">
         <div>
-          <label className="block text-sm text-gray-300 mb-1">
-            Name {/* Ad */}
-          </label>
+          <label className="block text-sm text-gray-300 mb-1">Ad</label>
           <input
             name="name"
             value={form.name}
@@ -91,9 +88,7 @@ const AdminCategoryForm = () => {
         </div>
 
         <div>
-          <label className="block text-sm text-gray-300 mb-1">
-            Beschreibung {/* Açıklama */}
-          </label>
+          <label className="block text-sm text-gray-300 mb-1">Açıklama</label>
           <textarea
             name="description"
             value={form.description}
@@ -106,9 +101,7 @@ const AdminCategoryForm = () => {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm text-gray-300 mb-1">
-              Reihenfolge {/* Sıra */}
-            </label>
+            <label className="block text-sm text-gray-300 mb-1">Sıra</label>
             <input
               type="number"
               name="displayOrder"
@@ -126,7 +119,7 @@ const AdminCategoryForm = () => {
                 onChange={handleChange}
                 className="mr-2"
               />
-              Aktiv {/* Aktif */}
+              Aktif
             </label>
           </div>
         </div>
@@ -136,7 +129,7 @@ const AdminCategoryForm = () => {
             type="submit"
             className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
           >
-            {isEdit ? 'Aktualisieren' /* Güncelle */ : 'Erstellen' /* Oluştur */}
+            {isEdit ? 'Güncelle' : 'Oluştur'}
           </button>
         </div>
       </form>

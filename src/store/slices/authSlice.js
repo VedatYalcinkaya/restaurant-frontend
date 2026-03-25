@@ -53,7 +53,7 @@ export const checkAuthStatus = createAsyncThunk(
       
       // Token varsa kullanıcı bilgilerini getir
       return dispatch(getCurrentUser()).unwrap();
-    } catch (error) {
+    } catch {
       // Hata durumunda çıkış yap
       dispatch(logout());
       return rejectWithValue('Oturum süresi dolmuş');

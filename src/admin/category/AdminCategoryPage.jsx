@@ -43,7 +43,7 @@ const AdminCategoryPage = () => {
   };
 
   const handleDelete = async (id) => {
-    if (confirm('Sind Sie sicher, dass Sie löschen möchten?')) { // Silmek istediğinize emin misiniz?
+    if (confirm('Silmek istediğinize emin misiniz?')) {
       await dispatch(deleteMenuCategory(id));
     }
   };
@@ -51,12 +51,12 @@ const AdminCategoryPage = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-white">Kategorien {/* Kategoriler */}</h1>
+        <h1 className="text-2xl font-bold text-white">Kategoriler</h1>
         <Link
           to="/admin/categories/new"
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center transition-colors"
         >
-          <IconPlus className="h-5 w-5 mr-2" /> Neue Kategorie {/* Yeni Kategori */}
+          <IconPlus className="h-5 w-5 mr-2" /> Yeni Kategori
         </Link>
       </div>
 
@@ -65,7 +65,7 @@ const AdminCategoryPage = () => {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Kategorie suchen..." // Kategori ara...
+            placeholder="Kategori ara..."
             className="w-full bg-gray-700 border border-gray-600 rounded-lg pl-3 pr-10 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <div className="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -80,17 +80,17 @@ const AdminCategoryPage = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-12 text-gray-400">Keine Einträge gefunden {/* Kayıt bulunamadı */}</div>
+          <div className="text-center py-12 text-gray-400">Kayıt bulunamadı</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-700">
                 <tr>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Name {/* Ad */}</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Beschreibung {/* Açıklama */}</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Reihenfolge {/* Sıra */}</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Status {/* Durum */}</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Aktionen {/* İşlemler */}</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Ad</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Açıklama</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Sıra</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Durum</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">İşlemler</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-700">
@@ -105,7 +105,7 @@ const AdminCategoryPage = () => {
                           c.active ? 'bg-emerald-500/20 text-emerald-500' : 'bg-red-500/20 text-red-500'
                         }`}
                       >
-                        {c.active ? 'Aktiv' /* Aktif */ : 'Inaktiv' /* Pasif */}
+                        {c.active ? 'Aktif' : 'Pasif'}
                       </span>
                     </td>
                     <td className="py-3 px-4">
@@ -113,21 +113,21 @@ const AdminCategoryPage = () => {
                         <button
                           onClick={() => handleToggleActive(c)}
                           className="p-1.5 rounded-lg bg-yellow-500/20 text-yellow-500 hover:bg-yellow-500/30"
-                          title="Status ändern" // Durum Değiştir
+                          title="Durumu değiştir"
                         >
                           {c.active ? <IconToggleLeft className="h-5 w-5" /> : <IconToggleRight className="h-5 w-5" />}
                         </button>
                         <button
                           onClick={() => navigate(`/admin/categories/edit/${c.id}`)}
                           className="p-1.5 rounded-lg bg-blue-500/20 text-blue-500 hover:bg-blue-500/30"
-                          title="Bearbeiten" // Düzenle
+                          title="Düzenle"
                         >
                           <IconEdit className="h-5 w-5" />
                         </button>
                         <button
                           onClick={() => handleDelete(c.id)}
                           className="p-1.5 rounded-lg bg-red-500/20 text-red-500 hover:bg-red-500/30"
-                          title="Löschen" // Sil
+                          title="Sil"
                         >
                           <IconTrash className="h-5 w-5" />
                         </button>

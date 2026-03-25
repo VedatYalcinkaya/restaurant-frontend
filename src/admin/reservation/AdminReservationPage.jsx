@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
-import { 
+import {
   listReservations,
   listReservationsByStatus,
   listReservationsByDateRange,
@@ -15,17 +15,17 @@ import {
 } from '../../store/slices/reservationSlice';
 
 const statusLabels = {
-  ALL: 'Alle',
-  PENDING: 'Ausstehend',
-  CONFIRMED: 'Bestätigt',
-  COMPLETED: 'Abgeschlossen',
-  NO_SHOW: 'Nicht erschienen',
-  CANCELLED: 'Storniert',
+  ALL: 'Tümü',
+  PENDING: 'Beklemede',
+  CONFIRMED: 'Onaylandı',
+  COMPLETED: 'Tamamlandı',
+  NO_SHOW: 'Gelmedi',
+  CANCELLED: 'İptal Edildi',
 };
 
 const normalizeStatus = (s) => {
   const u = String(s || '').toUpperCase();
-  if (u === 'CANCELED') return 'CANCELLED'; // tek tip kullan
+  if (u === 'CANCELED') return 'CANCELLED';
   return u;
 };
 
@@ -33,7 +33,7 @@ const normalize = (str) =>
   (str || '')
     .toLowerCase()
     .normalize('NFD')
-    .replace(/\p{Diacritic}/gu, ''); // ö->o, ü->u, ä->a, ß->ss
+    .replace(/\p{Diacritic}/gu, '');
 
 const formatDate = (yyyyMmDd) => {
   if (!yyyyMmDd) return '';
@@ -63,13 +63,12 @@ const AdminReservationPage = () => {
 
   const blockedActionNote = (status) => {
     const s = normalizeStatus(status);
-    if (s === 'CANCELLED') return 'Für stornierte Reservierungen sind keine Aktionen möglich.';
-    if (s === 'COMPLETED') return 'Für abgeschlossene Reservierungen sind keine Aktionen möglich.';
-    if (s === 'NO_SHOW') return 'Für als „Nicht erschienen“ markierte Reservierungen sind keine Aktionen möglich.';
-    return 'Aktionen nicht verfügbar.';
+    if (s === 'CANCELLED') return 'İptal edilen rezervasyonlarda işlem yapılamaz.';
+    if (s === 'COMPLETED') return 'Tamamlanan rezervasyonlarda işlem yapılamaz.';
+    if (s === 'NO_SHOW') return 'Gelmedi olarak işaretlenen rezervasyonlarda işlem yapılamaz.';
+    return 'İşlemler kullanılamıyor.';
   };
 
-  // Listeyi çekme (hafif debounce ile)
   useEffect(() => {
     const t = setTimeout(() => {
       if (activeTab === 'ALL') {
@@ -78,12 +77,16 @@ const AdminReservationPage = () => {
         } else {
           dispatch(listReservations({ page: 0, size: 100 }));
         }
+      } else if (dateStart && dateEnd) {
+        dispatch(
+          listReservationsByDateRangeAndStatus({
+            startDate: dateStart,
+            endDate: dateEnd,
+            status: activeTab
+          })
+        );
       } else {
-        if (dateStart && dateEnd) {
-          dispatch(listReservationsByDateRangeAndStatus({ startDate: dateStart, endDate: dateEnd, status: activeTab }));
-        } else {
-          dispatch(listReservationsByStatus({ status: activeTab }));
-        }
+        dispatch(listReservationsByStatus({ status: activeTab }));
       }
     }, 250);
     return () => clearTimeout(t);
@@ -98,14 +101,13 @@ const AdminReservationPage = () => {
       cancel: 'CANCELLED',
     };
     const successMsgMap = {
-      confirm: 'Reservierung bestätigt',
-      complete: 'Reservierung abgeschlossen',
-      noShow: 'Reservierung als „Nicht erschienen“ markiert',
-      cancel: 'Reservierung storniert',
+      confirm: 'Rezervasyon onaylandı',
+      complete: 'Rezervasyon tamamlandı',
+      noShow: 'Rezervasyon gelmedi olarak işaretlendi',
+      cancel: 'Rezervasyon iptal edildi',
     };
 
     try {
-      // Engelli statülerde işlemi durdur
       const currentItem = (listState.content || [])
         .concat(...Object.values(byStatus || {}).map((s) => s.content || []))
         .find((r) => r.id === id);
@@ -132,11 +134,11 @@ const AdminReservationPage = () => {
           break;
       }
 
-      toast.success(successMsgMap[action] || 'Vorgang erfolgreich');
+      toast.success(successMsgMap[action] || 'İşlem başarılı');
       const nextTab = nextTabMap[action];
       if (nextTab) setActiveTab(nextTab);
     } catch (err) {
-      const msg = err?.response?.data?.message || err?.message || 'Vorgang fehlgeschlagen';
+      const msg = err?.response?.data?.message || err?.message || 'İşlem başarısız';
       toast.error(msg);
     } finally {
       setProcessingId(null);
@@ -144,27 +146,27 @@ const AdminReservationPage = () => {
   };
 
   const handleDeleteOne = async (id) => {
-    if (!confirm('Sind Sie sicher, dass Sie diese Reservierung löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.')) return;
+    if (!confirm('Bu rezervasyonu silmek istediğinize emin misiniz? Bu işlem geri alınamaz.')) return;
     try {
       await dispatch(deleteReservation(id)).unwrap();
-      toast.success('Reservierung gelöscht');
+      toast.success('Rezervasyon silindi');
       if (activeTab === 'ALL') dispatch(listReservations({ page: 0, size: 100 }));
       else dispatch(listReservationsByStatus({ status: activeTab }));
     } catch (err) {
-      toast.error(err?.response?.data?.message || err?.message || 'Löschen fehlgeschlagen');
+      toast.error(err?.response?.data?.message || err?.message || 'Silme işlemi başarısız');
     }
   };
 
   const handleDeleteFinalized = async () => {
-    if (!confirm('Alle abgeschlossenen/stornierten/nicht erschienenen Reservierungen werden gelöscht. Möchten Sie fortfahren?')) return;
+    if (!confirm('Tamamlanan, iptal edilen ve gelinmeyen tüm rezervasyonlar silinecek. Devam etmek istiyor musunuz?')) return;
     try {
       const res = await dispatch(deleteFinalizedReservations()).unwrap();
-      const msg = typeof res === 'string' ? res : (res?.message || 'Bereinigung abgeschlossen');
+      const msg = typeof res === 'string' ? res : (res?.message || 'Temizleme tamamlandı');
       toast.success(msg);
       if (activeTab === 'ALL') dispatch(listReservations({ page: 0, size: 100 }));
       else dispatch(listReservationsByStatus({ status: activeTab }));
     } catch (err) {
-      toast.error(err?.response?.data?.message || err?.message || 'Sammellöschung fehlgeschlagen');
+      toast.error(err?.response?.data?.message || err?.message || 'Toplu silme işlemi başarısız');
     }
   };
 
@@ -185,15 +187,20 @@ const AdminReservationPage = () => {
         normalize(r.customerEmail).includes(q)
       );
     }
+
     items = [...items].sort((a, b) => {
       const aDate = new Date(`${a.reservationDate} ${a.reservationTime}`);
       const bDate = new Date(`${b.reservationDate} ${b.reservationTime}`);
       switch (sortBy) {
-        case 'dateAsc': return aDate - bDate;
-        case 'guestAsc': return (a.guestCount || 0) - (b.guestCount || 0);
-        case 'guestDesc': return (b.guestCount || 0) - (a.guestCount || 0);
+        case 'dateAsc':
+          return aDate - bDate;
+        case 'guestAsc':
+          return (a.guestCount || 0) - (b.guestCount || 0);
+        case 'guestDesc':
+          return (b.guestCount || 0) - (a.guestCount || 0);
         case 'dateDesc':
-        default: return bDate - aDate;
+        default:
+          return bDate - aDate;
       }
     });
     return items;
@@ -201,15 +208,14 @@ const AdminReservationPage = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white mb-6">Reservierungen</h1>
+      <h1 className="text-2xl font-bold text-white mb-6">Rezervasyonlar</h1>
 
-      {/* Tabs */}
       <div className="mb-4 flex flex-wrap gap-2">
-        {['ALL','PENDING','CONFIRMED','COMPLETED','NO_SHOW','CANCELLED'].map((t) => (
+        {['ALL', 'PENDING', 'CONFIRMED', 'COMPLETED', 'NO_SHOW', 'CANCELLED'].map((t) => (
           <button
             key={t}
             onClick={() => setActiveTab(t)}
-            className={`px-3 py-1.5 rounded-lg text-sm ${activeTab===t ? 'bg-emerald-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}`}
+            className={`px-3 py-1.5 rounded-lg text-sm ${activeTab === t ? 'bg-emerald-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}`}
           >
             {statusLabels[t] || t}
           </button>
@@ -219,77 +225,76 @@ const AdminReservationPage = () => {
             onClick={handleDeleteFinalized}
             className="px-3 py-1.5 rounded-lg text-sm bg-red-700 hover:bg-red-800 text-white"
           >
-            Finale Einträge bereinigen (Abgeschlossen/Storniert/Nicht erschienen)
+            Sonuçlanan kayıtları temizle (Tamamlandı/İptal Edildi/Gelmedi)
           </button>
         </div>
       </div>
 
-      {/* Filter */}
       <div className="bg-gray-800 rounded-lg p-4 mb-4 grid grid-cols-1 md:grid-cols-4 gap-3">
         <div>
-          <label className="block text-xs text-gray-400 mb-1">Start</label>
+          <label className="block text-xs text-gray-400 mb-1">Başlangıç</label>
           <input
             type="date"
             value={dateStart}
-            onChange={(e)=>setDateStart(e.target.value)}
+            onChange={(e) => setDateStart(e.target.value)}
             className="w-full bg-gray-700 border border-gray-600 rounded px-2 py-2 text-white"
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-400 mb-1">Ende</label>
+          <label className="block text-xs text-gray-400 mb-1">Bitiş</label>
           <input
             type="date"
             value={dateEnd}
-            onChange={(e)=>setDateEnd(e.target.value)}
+            onChange={(e) => setDateEnd(e.target.value)}
             className="w-full bg-gray-700 border border-gray-600 rounded px-2 py-2 text-white"
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-400 mb-1">Suchen</label>
+          <label className="block text-xs text-gray-400 mb-1">Ara</label>
           <input
             value={search}
-            onChange={(e)=>setSearch(e.target.value)}
-            placeholder="Name, Telefon, E-Mail..."
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Ad, telefon, e-posta..."
             className="w-full bg-gray-700 border border-gray-600 rounded px-2 py-2 text-white"
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-400 mb-1">Sortieren</label>
+          <label className="block text-xs text-gray-400 mb-1">Sırala</label>
           <select
             value={sortBy}
-            onChange={(e)=>setSortBy(e.target.value)}
+            onChange={(e) => setSortBy(e.target.value)}
             className="w-full bg-gray-700 border border-gray-600 rounded px-2 py-2 text-white"
           >
-            <option value="dateDesc">Datum (neu → alt)</option>
-            <option value="dateAsc">Datum (alt → neu)</option>
-            <option value="guestDesc">Gäste (absteigend)</option>
-            <option value="guestAsc">Gäste (aufsteigend)</option>
+            <option value="dateDesc">Tarih (yeni - eski)</option>
+            <option value="dateAsc">Tarih (eski - yeni)</option>
+            <option value="guestDesc">Kişi sayısı (azalan)</option>
+            <option value="guestAsc">Kişi sayısı (artan)</option>
           </select>
         </div>
       </div>
 
       <div className="bg-gray-800 rounded-lg overflow-hidden">
         <div className="px-4 py-2 text-xs text-gray-300 bg-gray-750/50 border-b border-gray-700">
-          Hinweis: Für abgeschlossene oder stornierte Reservierungen sind keine weiteren Aktionen möglich.
+          Not: Tamamlanan veya iptal edilen rezervasyonlarda ek işlem yapılamaz.
         </div>
 
-        {(activeTab==='ALL' ? listState.loading : (byStatus?.[activeTab]?.loading)) ? (
+        {(activeTab === 'ALL' ? listState.loading : byStatus?.[activeTab]?.loading) ? (
           <div className="flex justify-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
           </div>
         ) : filteredAndSorted.length === 0 ? (
-          <div className="text-center py-12 text-gray-400">Keine Einträge gefunden</div>
+          <div className="text-center py-12 text-gray-400">Kayıt bulunamadı</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-700">
                 <tr>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Gast</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Kontakt</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Datum/Uhrzeit</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Gäste</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Status</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Aktionen</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Misafir</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">İletişim</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Tarih/Saat</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Kişi Sayısı</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Durum</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">İşlemler</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-700">
@@ -318,32 +323,32 @@ const AdminReservationPage = () => {
                           ) : (
                             <>
                               <button
-                                disabled={processingId===r.id}
+                                disabled={processingId === r.id}
                                 onClick={() => handleAction('confirm', r.id)}
-                                className={`px-2 py-1 rounded text-white text-xs ${processingId===r.id? 'opacity-60 cursor-not-allowed bg-emerald-600':'bg-emerald-600 hover:bg-emerald-700'}`}
+                                className={`px-2 py-1 rounded text-white text-xs ${processingId === r.id ? 'opacity-60 cursor-not-allowed bg-emerald-600' : 'bg-emerald-600 hover:bg-emerald-700'}`}
                               >
-                                Bestätigen
+                                Onayla
                               </button>
                               <button
-                                disabled={processingId===r.id}
+                                disabled={processingId === r.id}
                                 onClick={() => handleAction('complete', r.id)}
-                                className={`px-2 py-1 rounded text-white text-xs ${processingId===r.id? 'opacity-60 cursor-not-allowed bg-blue-600':'bg-blue-600 hover:bg-blue-700'}`}
+                                className={`px-2 py-1 rounded text-white text-xs ${processingId === r.id ? 'opacity-60 cursor-not-allowed bg-blue-600' : 'bg-blue-600 hover:bg-blue-700'}`}
                               >
-                                Abschließen
+                                Tamamla
                               </button>
                               <button
-                                disabled={processingId===r.id}
+                                disabled={processingId === r.id}
                                 onClick={() => handleAction('noShow', r.id)}
-                                className={`px-2 py-1 rounded text-white text-xs ${processingId===r.id? 'opacity-60 cursor-not-allowed bg-yellow-600':'bg-yellow-600 hover:bg-yellow-700'}`}
+                                className={`px-2 py-1 rounded text-white text-xs ${processingId === r.id ? 'opacity-60 cursor-not-allowed bg-yellow-600' : 'bg-yellow-600 hover:bg-yellow-700'}`}
                               >
-                                Nicht erschienen
+                                Gelmedi
                               </button>
                               <button
-                                disabled={processingId===r.id}
+                                disabled={processingId === r.id}
                                 onClick={() => handleAction('cancel', r.id)}
-                                className={`px-2 py-1 rounded text-white text-xs ${processingId===r.id? 'opacity-60 cursor-not-allowed bg-red-600':'bg-red-600 hover:bg-red-700'}`}
+                                className={`px-2 py-1 rounded text-white text-xs ${processingId === r.id ? 'opacity-60 cursor-not-allowed bg-red-600' : 'bg-red-600 hover:bg-red-700'}`}
                               >
-                                Stornieren
+                                İptal Et
                               </button>
                             </>
                           )}
@@ -351,7 +356,7 @@ const AdminReservationPage = () => {
                             onClick={() => handleDeleteOne(r.id)}
                             className="px-2 py-1 rounded text-white text-xs bg-red-700 hover:bg-red-800"
                           >
-                            Löschen
+                            Sil
                           </button>
                         </div>
                       </td>

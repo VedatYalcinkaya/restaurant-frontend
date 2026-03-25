@@ -2,6 +2,7 @@ import axios from 'axios';
 
 // API temel URL'ini ayarla - ortam değişkeninden alarak
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8082/api/v1';
+const isDev = import.meta.env.DEV;
 
 // Token işlemleri için yardımcı fonksiyonlar
 const getAccessToken = () => localStorage.getItem('accessToken');
@@ -53,7 +54,7 @@ api.interceptors.request.use(
       console.log('FormData isteği için Content-Type kaldırıldı');
       
       // Debug amaçlı
-      if (process.env.NODE_ENV !== 'production') {
+      if (isDev) {
         console.log('İstek Headers:', config.headers);
         
         // FormData içeriğini debugger için logla
@@ -79,7 +80,7 @@ api.interceptors.request.use(
       config.headers['Content-Type'] = 'application/json';
       
       // Debug amaçlı
-      if (process.env.NODE_ENV !== 'production' && config.data) {
+      if (isDev && config.data) {
         console.log('JSON isteği gönderiliyor:', config.url);
         console.log('İstek Headers:', config.headers);
         console.log('İstek verisi:', config.data);

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { motion } from "motion/react";
+import { motion as Motion } from "motion/react";
 import { FiMail, FiPhone, FiMapPin, FiCheck, FiX } from "react-icons/fi";
-import { useDispatch, useSelector } from 'react-redux';
-import { sendContactMessage, selectContactFormState, resetContactForm } from '../store/slices/contactSlice';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  sendContactMessage,
+  selectContactFormState,
+} from "../store/slices/contactSlice";
 
 const Contact = () => {
   const dispatch = useDispatch();
@@ -22,6 +25,7 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const payload = {
       fullName: formData.fullName.trim(),
       email: formData.email.trim(),
@@ -29,58 +33,60 @@ const Contact = () => {
       subject: formData.subject?.trim() || undefined,
       message: formData.message.trim(),
     };
+
     await dispatch(sendContactMessage(payload));
     if (!formState.error) {
-      setFormData({ fullName: '', email: '', phone: '', subject: '', message: '' });
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
     }
   };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        {/* Kontaktinformationen */}
-        <motion.div
-          className="bg-gradient-to-br from-koyu-mavi/20 via-acik-mavi/30 to-turkuaz/20 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-koyu-mavi/10"
+        <Motion.div
+          className="bg-gradient-to-br from-ink/20 via-shell/30 to-brand-red-soft/20 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-ink/10"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h3 className="text-2xl font-bold text-koyu-mavi mb-6">
-            Kontaktinformationen
-          </h3>
-          <div className="h-1 w-16 bg-gradient-to-r from-turkuaz to-acik-mavi rounded-full mb-8"></div>
+          <h3 className="text-2xl font-bold text-ink mb-6">İletişim Bilgileri</h3>
+          <div className="h-1 w-16 bg-gradient-to-r from-brand-red-soft to-shell rounded-full mb-8"></div>
 
           <div className="space-y-6">
             <div className="flex items-start">
               <div className="flex-shrink-0">
-                <div className="bg-gradient-to-r from-koyu-mavi to-mavi w-12 h-12 rounded-full flex items-center justify-center">
+                <div className="bg-gradient-to-r from-ink to-brand-red w-12 h-12 rounded-full flex items-center justify-center">
                   <FiMail className="text-white text-xl" />
                 </div>
               </div>
               <div className="ml-4">
-                <h4 className="text-lg font-semibold text-koyu-mavi">E-Mail</h4>
+                <h4 className="text-lg font-semibold text-ink">E-posta</h4>
                 <a
-                  href="mailto:info@mipueblo.com"
-                  className="text-gray-600 hover:text-turkuaz transition-colors"
+                  href="mailto:iletisim@alasogus.com"
+                  className="text-gray-600 hover:text-brand-red-soft transition-colors"
                 >
-                  info@mipueblo.com
+                  iletisim@alasogus.com
                 </a>
               </div>
             </div>
 
             <div className="flex items-start">
               <div className="flex-shrink-0">
-                <div className="bg-gradient-to-r from-koyu-mavi to-mavi w-12 h-12 rounded-full flex items-center justify-center">
+                <div className="bg-gradient-to-r from-ink to-brand-red w-12 h-12 rounded-full flex items-center justify-center">
                   <FiPhone className="text-white text-xl" />
                 </div>
               </div>
               <div className="ml-4">
-                <h4 className="text-lg font-semibold text-koyu-mavi">
-                  Telefon
-                </h4>
+                <h4 className="text-lg font-semibold text-ink">Telefon</h4>
                 <a
                   href="tel:+905369151144"
-                  className="text-gray-600 hover:text-turkuaz transition-colors"
+                  className="text-gray-600 hover:text-brand-red-soft transition-colors"
                 >
                   +90 (536) 915 11 44
                 </a>
@@ -89,51 +95,45 @@ const Contact = () => {
 
             <div className="flex items-start">
               <div className="flex-shrink-0">
-                <div className="bg-gradient-to-r from-koyu-mavi to-mavi w-12 h-12 rounded-full flex items-center justify-center">
+                <div className="bg-gradient-to-r from-ink to-brand-red w-12 h-12 rounded-full flex items-center justify-center">
                   <FiMapPin className="text-white text-xl" />
                 </div>
               </div>
               <div className="ml-4">
-                <h4 className="text-lg font-semibold text-koyu-mavi">Adresse</h4>
-                <p className="text-gray-600">Antalya, Türkei</p>
+                <h4 className="text-lg font-semibold text-ink">Adres</h4>
+                <p className="text-gray-600">
+                  Altındağ, Anafartalar Cd. No:73 D:1, Muratpaşa/Antalya
+                </p>
               </div>
             </div>
           </div>
 
           <div className="mt-10">
-            <h4 className="text-xl font-semibold text-koyu-mavi mb-4">
-              Öffnungszeiten
-            </h4>
+            <h4 className="text-xl font-semibold text-ink mb-4">Çalışma Saatleri</h4>
             <ul className="space-y-2 text-gray-600">
               <li className="flex justify-between">
-                <span>Montag – Freitag:</span>
-                <span className="text-koyu-mavi font-medium">
-                  09:00 – 18:00
-                </span>
+                <span>Pazartesi - Cuma:</span>
+                <span className="text-ink font-medium">11:00 - 23:00</span>
               </li>
               <li className="flex justify-between">
-                <span>Samstag – Sonntag:</span>
-                <span className="text-koyu-mavi font-medium">Geschlossen</span>
+                <span>Cumartesi - Pazar:</span>
+                <span className="text-ink font-medium">11:00 - 23:30</span>
               </li>
             </ul>
           </div>
-        </motion.div>
+        </Motion.div>
 
-        {/* Kontaktformular */}
-        <motion.div
+        <Motion.div
           className="lg:col-span-2 bg-white rounded-2xl p-8 shadow-lg border border-gray-100"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <h3 className="text-2xl font-bold text-koyu-mavi mb-6">
-            Nachricht senden
-          </h3>
-          <div className="h-1 w-16 bg-gradient-to-r from-turkuaz to-acik-mavi rounded-full mb-8"></div>
+          <h3 className="text-2xl font-bold text-ink mb-6">Mesaj Gönderin</h3>
+          <div className="h-1 w-16 bg-gradient-to-r from-brand-red-soft to-shell rounded-full mb-8"></div>
 
-          {/* Hinweise */}
           {(formState.success || formState.error) && (
-            <motion.div
+            <Motion.div
               className={`mb-6 p-4 rounded-lg ${
                 formState.error
                   ? "bg-red-100 text-red-800"
@@ -151,13 +151,14 @@ const Contact = () => {
               </div>
               <div>
                 {formState.error
-                  ? (typeof formState.error === 'string' ? formState.error : 'Nachricht konnte nicht gesendet werden')
-                  : 'Ihre Nachricht ist eingegangen'}
+                  ? typeof formState.error === "string"
+                    ? formState.error
+                    : "Mesaj gönderilemedi"
+                  : "Mesajınız bize ulaştı"}
               </div>
-            </motion.div>
+            </Motion.div>
           )}
 
-          {/* Formular */}
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
@@ -165,7 +166,7 @@ const Contact = () => {
                   htmlFor="fullName"
                   className="block text-gray-700 font-medium mb-2"
                 >
-                  Name
+                  Ad Soyad
                 </label>
                 <input
                   type="text"
@@ -173,8 +174,8 @@ const Contact = () => {
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-koyu-kirmizi focus:border-transparent transition-all"
-                  placeholder="Name eingeben"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-all"
+                  placeholder="Adınızı ve soyadınızı girin"
                   required
                 />
               </div>
@@ -183,7 +184,7 @@ const Contact = () => {
                   htmlFor="email"
                   className="block text-gray-700 font-medium mb-2"
                 >
-                  E-Mail
+                  E-posta
                 </label>
                 <input
                   type="email"
@@ -191,8 +192,8 @@ const Contact = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-koyu-kirmizi focus:border-transparent transition-all"
-                  placeholder="E-Mail eingeben"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-all"
+                  placeholder="E-posta adresinizi girin"
                   required
                 />
               </div>
@@ -212,8 +213,8 @@ const Contact = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-koyu-kirmizi focus:border-transparent transition-all"
-                  placeholder="Telefonnummer eingeben"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-all"
+                  placeholder="Telefon numaranızı girin"
                 />
               </div>
               <div>
@@ -221,7 +222,7 @@ const Contact = () => {
                   htmlFor="subject"
                   className="block text-gray-700 font-medium mb-2"
                 >
-                  Betreff (optional)
+                  Konu (isteğe bağlı)
                 </label>
                 <input
                   type="text"
@@ -229,8 +230,8 @@ const Contact = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-koyu-kirmizi focus:border-transparent transition-all"
-                  placeholder="Betreff eingeben"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-all"
+                  placeholder="Konu girin"
                 />
               </div>
             </div>
@@ -240,7 +241,7 @@ const Contact = () => {
                 htmlFor="message"
                 className="block text-gray-700 font-medium mb-2"
               >
-                Nachricht
+                Mesaj
               </label>
               <textarea
                 id="message"
@@ -248,8 +249,8 @@ const Contact = () => {
                 value={formData.message}
                 onChange={handleChange}
                 rows="5"
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-koyu-kirmizi focus:border-transparent transition-all"
-                placeholder="Nachricht eingeben..."
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-all"
+                placeholder="Mesajınızı yazın..."
                 required
               ></textarea>
             </div>
@@ -258,18 +259,17 @@ const Contact = () => {
               <button
                 type="submit"
                 disabled={formState.loading}
-                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-gradient-to-r from-koyu-kirmizi to-daha-koyu-kirmizi hover:from-koyu-kirmizi/90 hover:to-daha-koyu-kirmizi/90 transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-70"
+                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-gradient-to-r from-brand-red to-brand-red-deep hover:from-brand-red/90 hover:to-brand-red-deep/90 transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-70"
               >
-                {formState.loading ? "Wird gesendet..." : "Senden"}
+                {formState.loading ? "Gönderiliyor..." : "Gönder"}
               </button>
             </div>
           </form>
-        </motion.div>
+        </Motion.div>
       </div>
 
-      {/* Karte */}
-      <motion.div
-        className="mt-12 rounded-2xl shadow-lg overflow-hidden h-96 border border-koyu-mavi/10"
+      <Motion.div
+        className="mt-12 rounded-2xl shadow-lg overflow-hidden h-96 border border-ink/10"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
@@ -282,10 +282,10 @@ const Contact = () => {
           allowFullScreen=""
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          title="Standort"
+          title="Konum"
           className="transition-all duration-300"
         ></iframe>
-      </motion.div>
+      </Motion.div>
     </div>
   );
 };

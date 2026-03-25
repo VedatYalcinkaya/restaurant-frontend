@@ -54,8 +54,8 @@ const LoginPage = () => {
   
   return (
     <>
-      <title>Giriş | Emre Okur Avukatlık</title>
-      <meta name="description" content="Emre Okur Avukatlık bürosuna giriş yapın" />
+      <title>Giriş | Ala Söğüş Admin</title>
+      <meta name="description" content="Ala Söğüş yönetim paneline giriş yapın" />
       
       <div className="min-h-screen flex flex-col items-center justify-center bg-black">
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -77,10 +77,10 @@ const LoginPage = () => {
           <div className="flex flex-col items-center mb-8">
             <div className="flex items-center space-x-2 mb-2">
               <div className="h-8 w-8 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-emerald-500" />
-              <span className="text-2xl font-bold text-white">Emre Okur Avukatlık</span>
+              <span className="text-2xl font-bold text-white">Ala Söğüş</span>
             </div>
-            <h1 className="text-3xl font-bold text-white mt-6 mb-2">Giriş</h1>
-            <p className="text-gray-400 text-center max-w-xs">Yönetim paneline erişim için giriş yapın</p>
+            <h1 className="text-3xl font-bold text-white mt-6 mb-2">Yönetim Girişi</h1>
+            <p className="text-gray-400 text-center max-w-xs">Admin paneline erişmek için hesabınızla giriş yapın</p>
           </div>
           
           <div className="relative">

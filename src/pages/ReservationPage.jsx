@@ -1,18 +1,24 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { motion } from 'motion/react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createReservation, selectReservationCreateError, selectReservationCreating, selectReservationCreateSuccess, clearCreateState } from '../store/slices/reservationSlice';
+import React, { useEffect, useMemo, useState } from "react";
+import { motion as Motion } from "motion/react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createReservation,
+  selectReservationCreateError,
+  selectReservationCreating,
+  selectReservationCreateSuccess,
+  clearCreateState,
+} from "../store/slices/reservationSlice";
 
 const ReservationPage = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    surname: '',
-    email: '',
-    phone: '',
-    date: '',
-    time: '',
+    name: "",
+    surname: "",
+    email: "",
+    phone: "",
+    date: "",
+    time: "",
     guests: 2,
-    message: ''
+    message: "",
   });
 
   const dispatch = useDispatch();
@@ -22,21 +28,22 @@ const ReservationPage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const payload = {
       customerName: formData.name.trim(),
-      customerSurname: formData.surname?.trim() || '-',
+      customerSurname: formData.surname?.trim() || "-",
       customerPhone: formData.phone.trim(),
       customerEmail: formData.email.trim(),
-      reservationDate: formData.date, // yyyy-MM-dd
-      reservationTime: formData.time, // HH:mm
+      reservationDate: formData.date,
+      reservationTime: formData.time,
       guestCount: Number(formData.guests),
       tableNumber: undefined,
       specialRequests: formData.message?.trim() || undefined,
@@ -45,36 +52,49 @@ const ReservationPage = () => {
     dispatch(createReservation(payload));
   };
 
-  // Başarı/başarısızlık geri bildirimleri
   useEffect(() => {
     if (submitSuccess) {
-      alert('Ihre Reservierung wurde erfolgreich übermittelt! Wir melden uns bald bei Ihnen.');
-      setFormData({ name: '', email: '', phone: '', date: '', time: '', guests: 2, message: '' });
+      alert("Rezervasyon talebiniz alındı. En kısa sürede sizinle iletişime geçeceğiz.");
+      setFormData({
+        name: "",
+        surname: "",
+        email: "",
+        phone: "",
+        date: "",
+        time: "",
+        guests: 2,
+        message: "",
+      });
       dispatch(clearCreateState());
     }
   }, [submitSuccess, dispatch]);
 
   useEffect(() => {
     if (submitError) {
-      const msg = typeof submitError === 'string' ? submitError : submitError?.message;
+      const msg = typeof submitError === "string" ? submitError : submitError?.message;
       const details = submitError?.details;
-      let detailText = '';
-      if (details && typeof details === 'object') {
-        detailText = '\n' + Object.entries(details).map(([k, v]) => `• ${k}: ${v}`).join('\n');
+      let detailText = "";
+
+      if (details && typeof details === "object") {
+        detailText =
+          "\n" +
+          Object.entries(details)
+            .map(([key, value]) => `- ${key}: ${value}`)
+            .join("\n");
       }
-      alert((msg || 'Hata oluştu') + detailText);
+
+      alert((msg || "Hata oluştu") + detailText);
       dispatch(clearCreateState());
     }
   }, [submitError, dispatch]);
 
-  // 11:00–23:00 arası her 30 dk slot
   const timeSlots = useMemo(() => {
     const slots = [];
     for (let h = 11; h <= 23; h++) {
       for (const m of [0, 30]) {
         if (h === 23 && m > 0) continue;
-        const hh = String(h).padStart(2, '0');
-        const mm = String(m).padStart(2, '0');
+        const hh = String(h).padStart(2, "0");
+        const mm = String(m).padStart(2, "0");
         slots.push(`${hh}:${mm}`);
       }
     }
@@ -82,40 +102,36 @@ const ReservationPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-acik-krem py-12">
+    <div className="min-h-screen bg-canvas py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-koyu-kahve mb-4">
-            Tisch reservieren
+          <h1 className="text-4xl md:text-5xl font-bold text-ink mb-4">
+            Rezervasyon
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Reservieren Sie Ihren Tisch für ein unvergessliches kulinarisches Erlebnis
+            Ala Söğüş&apos;te yerinizi ayırtın, planınızı rahatça yapın.
           </p>
-        </motion.div>
+        </Motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Rezervasyon Formu */}
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-white rounded-xl shadow-lg p-8"
           >
-            <h2 className="text-2xl font-bold text-koyu-kahve mb-6">
-              Reservierungsanfrage
-            </h2>
-            
+            <h2 className="text-2xl font-bold text-ink mb-6">Rezervasyon Formu</h2>
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Name *
+                    Ad *
                   </label>
                   <input
                     type="text"
@@ -124,14 +140,14 @@ const ReservationPage = () => {
                     required
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-altin focus:border-transparent transition-colors"
-                    placeholder="Ihr vollständiger Name"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
+                    placeholder="Adınız"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="surname" className="block text-sm font-medium text-gray-700 mb-2">
-                    Nachname *
+                    Soyad *
                   </label>
                   <input
                     type="text"
@@ -140,8 +156,8 @@ const ReservationPage = () => {
                     required
                     value={formData.surname}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-altin focus:border-transparent transition-colors"
-                    placeholder="Ihr Nachname"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
+                    placeholder="Soyadınız"
                   />
                 </div>
               </div>
@@ -149,7 +165,7 @@ const ReservationPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    E-Mail *
+                    E-posta *
                   </label>
                   <input
                     type="email"
@@ -158,8 +174,8 @@ const ReservationPage = () => {
                     required
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-altin focus:border-transparent transition-colors"
-                    placeholder="ihre.email@beispiel.de"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
+                    placeholder="ornek@eposta.com"
                   />
                 </div>
               </div>
@@ -174,15 +190,15 @@ const ReservationPage = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-altin focus:border-transparent transition-colors"
-                  placeholder="+49 221 123 456"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
+                  placeholder="+90 5xx xxx xx xx"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">
-                    Datum *
+                    Tarih *
                   </label>
                   <input
                     type="date"
@@ -191,14 +207,14 @@ const ReservationPage = () => {
                     required
                     value={formData.date}
                     onChange={handleInputChange}
-                    min={new Date(Date.now() + 24*60*60*1000).toISOString().split('T')[0]}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-altin focus:border-transparent transition-colors"
+                    min={new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split("T")[0]}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-2">
-                    Uhrzeit *
+                    Saat *
                   </label>
                   <select
                     id="time"
@@ -206,18 +222,20 @@ const ReservationPage = () => {
                     required
                     value={formData.time}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-altin focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
                   >
-                    <option value="">Wählen Sie</option>
-                    {timeSlots.map(time => (
-                      <option key={time} value={time}>{time}</option>
+                    <option value="">Seçiniz</option>
+                    {timeSlots.map((time) => (
+                      <option key={time} value={time}>
+                        {time}
+                      </option>
                     ))}
                   </select>
                 </div>
-                
+
                 <div>
                   <label htmlFor="guests" className="block text-sm font-medium text-gray-700 mb-2">
-                    Personen *
+                    Kişi Sayısı *
                   </label>
                   <select
                     id="guests"
@@ -225,10 +243,12 @@ const ReservationPage = () => {
                     required
                     value={formData.guests}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-altin focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
                   >
-                    {[1,2,3,4,5,6,7,8].map(num => (
-                      <option key={num} value={num}>{num} {num === 1 ? 'Person' : 'Personen'}</option>
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                      <option key={num} value={num}>
+                        {num} Kişi
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -236,7 +256,7 @@ const ReservationPage = () => {
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Besondere Wünsche
+                  Özel Notlar
                 </label>
                 <textarea
                   id="message"
@@ -244,83 +264,80 @@ const ReservationPage = () => {
                   rows={4}
                   value={formData.message}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-altin focus:border-transparent transition-colors"
-                  placeholder="Haben Sie besondere Wünsche oder Allergien?"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
+                  placeholder="Alerji, özel talep veya ek notlarınızı yazabilirsiniz."
                 />
               </div>
-              {/* Submit Button - her zaman görünür */}
+
               <div className="sticky bottom-0 pt-2">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-koyu-kirmizi hover:bg-daha-koyu-kirmizi text-white font-medium py-3 px-6 rounded-lg transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? 'Wird gesendet...' : 'Reservierung anfragen'}
-              </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-brand-red hover:bg-brand-red-deep text-white font-medium py-3 px-6 rounded-lg transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? "Gönderiliyor..." : "Rezervasyon Talebi Gönder"}
+                </button>
               </div>
             </form>
-          </motion.div>
+          </Motion.div>
 
-          {/* Restaurant Bilgileri */}
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             className="space-y-8"
           >
             <div className="bg-white rounded-xl shadow-lg p-8">
-              <h3 className="text-xl font-bold text-koyu-kahve mb-4">
-                Öffnungszeiten
-              </h3>
+              <h3 className="text-xl font-bold text-ink mb-4">Çalışma Saatleri</h3>
               <div className="space-y-2 text-gray-600">
                 <div className="flex justify-between">
-                  <span>Montag - Donnerstag:</span>
-                  <span>17:30 - 22:00</span>
+                  <span>Pazartesi - Cuma:</span>
+                  <span>11:00 - 23:00</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Freitag - Samstag:</span>
-                  <span>17:30 - 23:00</span>
+                  <span>Cumartesi:</span>
+                  <span>11:00 - 23:30</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Sonntag:</span>
-                  <span>12:00 - 21:00</span>
+                  <span>Pazar:</span>
+                  <span>12:00 - 22:00</span>
                 </div>
               </div>
             </div>
 
             <div className="bg-white rounded-xl shadow-lg p-8">
-              <h3 className="text-xl font-bold text-koyu-kahve mb-4">
-                Kontakt
-              </h3>
+              <h3 className="text-xl font-bold text-ink mb-4">İletişim</h3>
               <div className="space-y-3 text-gray-600">
                 <div>
-                  <strong>Telefon:</strong><br />
-                  +49 221 123 456
+                  <strong>Telefon:</strong>
+                  <br />
+                  +90 (536) 915 11 44
                 </div>
                 <div>
-                  <strong>E-Mail:</strong><br />
-                  info@esszimmer-koeln.de
+                  <strong>E-posta:</strong>
+                  <br />
+                  iletisim@alasogus.com
                 </div>
                 <div>
-                  <strong>Adresse:</strong><br />
-                  Musterstraße 123<br />
-                  50667 Köln
+                  <strong>Adres:</strong>
+                  <br />
+                  Altındağ, Anafartalar Cd. No:73 D:1
+                  <br />
+                  07050 Muratpaşa/Antalya
                 </div>
               </div>
             </div>
 
-            <div className="bg-krem rounded-xl p-8">
-              <h3 className="text-xl font-bold text-koyu-kahve mb-4">
-                Wichtige Hinweise
-              </h3>
+            <div className="bg-paper rounded-xl p-8">
+              <h3 className="text-xl font-bold text-ink mb-4">Önemli Bilgiler</h3>
               <ul className="space-y-2 text-gray-600">
-                <li>• Reservierungen werden nach Verfügbarkeit bestätigt</li>
-                <li>• Bei Gruppen ab 8 Personen kontaktieren Sie uns bitte direkt</li>
-                <li>• Stornierungen bitte mindestens 2 Stunden vorher</li>
-                <li>• Wir freuen uns auf Ihren Besuch!</li>
+                <li>Rezervasyon talepleri uygunluğa göre onaylanır.</li>
+                <li>8 kişi ve üzeri gruplar için bizi doğrudan aramanız önerilir.</li>
+                <li>Plan değişikliğinde mümkünse en az 2 saat önce haber verin.</li>
+                <li>Sizi Ala Söğüş&apos;te ağırlamayı sabırsızlıkla bekliyoruz.</li>
               </ul>
             </div>
-          </motion.div>
+          </Motion.div>
         </div>
       </div>
     </div>

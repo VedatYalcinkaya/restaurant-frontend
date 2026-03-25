@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { 
+import {
   listMenusPaginated,
   listAllMenus,
   deleteMenu,
@@ -38,14 +38,13 @@ const AdminMenuPage = () => {
         await dispatch(activateMenu(menu.id)).unwrap();
       }
     } finally {
-      // Nach Änderung Liste neu laden
       dispatch(listMenusPaginated({ page: 0, size: 10 }));
       dispatch(listAllMenus());
     }
   };
 
   const handleDelete = async (id) => {
-    if (confirm('Sind Sie sicher, dass Sie löschen möchten?')) {
+    if (confirm('Silmek istediğinize emin misiniz?')) {
       await dispatch(deleteMenu(id));
     }
   };
@@ -53,12 +52,12 @@ const AdminMenuPage = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-white">Menüs</h1>
+        <h1 className="text-2xl font-bold text-white">Menüler</h1>
         <Link
           to="/admin/menus/new"
           className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center transition-colors"
         >
-          <IconPlus className="h-5 w-5 mr-2" /> Neues Menü
+          <IconPlus className="h-5 w-5 mr-2" /> Yeni Menü
         </Link>
       </div>
 
@@ -67,7 +66,7 @@ const AdminMenuPage = () => {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Menü suchen..."
+            placeholder="Menü ara..."
             className="w-full bg-gray-700 border border-gray-600 rounded-lg pl-3 pr-10 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
           <div className="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -82,17 +81,17 @@ const AdminMenuPage = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-12 text-gray-400">Keine Einträge gefunden</div>
+          <div className="text-center py-12 text-gray-400">Kayıt bulunamadı</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-700">
                 <tr>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Bild</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Name</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Preis</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Status</th>
-                  <th className="py-3 px-4 text-left font-medium text-gray-300">Aktionen</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Görsel</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Ad</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Fiyat</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">Durum</th>
+                  <th className="py-3 px-4 text-left font-medium text-gray-300">İşlemler</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-700">
@@ -110,7 +109,7 @@ const AdminMenuPage = () => {
                       <div className="text-xs text-gray-400">#{m.id}</div>
                     </td>
                     <td className="py-3 px-4 text-gray-300">
-                      {m.price} €
+                      {m.price} EUR
                     </td>
                     <td className="py-3 px-4">
                       <span
@@ -118,7 +117,7 @@ const AdminMenuPage = () => {
                           m.active ? 'bg-emerald-500/20 text-emerald-500' : 'bg-red-500/20 text-red-500'
                         }`}
                       >
-                        {m.active ? 'Aktiv' : 'Inaktiv'}
+                        {m.active ? 'Aktif' : 'Pasif'}
                       </span>
                     </td>
                     <td className="py-3 px-4">
@@ -126,21 +125,21 @@ const AdminMenuPage = () => {
                         <button
                           onClick={() => handleToggleActive(m)}
                           className="p-1.5 rounded-lg bg-yellow-500/20 text-yellow-500 hover:bg-yellow-500/30"
-                          title="Status ändern"
+                          title="Durumu değiştir"
                         >
                           {m.active ? <IconToggleLeft className="h-5 w-5" /> : <IconToggleRight className="h-5 w-5" />}
                         </button>
                         <button
                           onClick={() => navigate(`/admin/menus/edit/${m.id}`)}
                           className="p-1.5 rounded-lg bg-blue-500/20 text-blue-500 hover:bg-blue-500/30"
-                          title="Bearbeiten"
+                          title="Düzenle"
                         >
                           <IconEdit className="h-5 w-5" />
                         </button>
                         <button
                           onClick={() => handleDelete(m.id)}
                           className="p-1.5 rounded-lg bg-red-500/20 text-red-500 hover:bg-red-500/30"
-                          title="Löschen"
+                          title="Sil"
                         >
                           <IconTrash className="h-5 w-5" />
                         </button>

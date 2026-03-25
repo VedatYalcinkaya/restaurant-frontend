@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { checkAuthStatus } from './store/slices/authSlice';
 import { Toaster } from 'react-hot-toast';
 
 // Layouts ve koruma bileşenleri
-import AuthGuard from './guards/AuthGuard';
 import RoleGuard from './guards/RoleGuard';
 
 // Ana sayfa ve genel bileşenler
@@ -21,8 +20,6 @@ import AdminMenuForm from './admin/menu/AdminMenuForm';
 import AdminCategoryPage from './admin/category/AdminCategoryPage';
 import AdminCategoryForm from './admin/category/AdminCategoryForm';
 import AdminReservationPage from './admin/reservation/AdminReservationPage';
-import CareerPage from './pages/CareerPage';
-import JobDetailPage from './pages/JobDetailPage';
 import AdminJobApplicationsPage from './admin/career/AdminJobApplicationsPage';
 import AdminJobsPage from './admin/career/AdminJobsPage';
 import AdminJobForm from './admin/career/AdminJobForm';
@@ -33,14 +30,13 @@ import LoginPage from './login/LoginPage';
 
 function App() {
   const dispatch = useDispatch();
-  const location = useLocation();
 
   useEffect(() => {
     // Token kontrolü yaparak oturum durumunu kontrol et
     dispatch(checkAuthStatus());
     
     // Sayfa title'ını ayarla
-    document.title = "MiPueblo Köln - Restaurant";
+    document.title = "Ala Söğüş | Antalya";
   }, [dispatch]);
 
   return (

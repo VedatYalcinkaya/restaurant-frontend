@@ -4,10 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { listActiveJobs, activateJob, deactivateJob, deleteJob } from '../../store/slices/jobSlice';
 
 const employmentTypeLabels = {
-  FULL_TIME: 'Vollzeit',
-  PART_TIME: 'Teilzeit',
-  INTERNSHIP: 'Praktikum',
-  CONTRACT: 'Befristet',
+  FULL_TIME: 'Tam Zamanlı',
+  PART_TIME: 'Yarı Zamanlı',
+  INTERNSHIP: 'Staj',
+  CONTRACT: 'Sözleşmeli',
 };
 
 const AdminJobsPage = () => {
@@ -16,12 +16,14 @@ const AdminJobsPage = () => {
   const { content = [], loading } = useSelector((s) => s.jobs.activeList);
   const [q, setQ] = useState('');
 
-  useEffect(() => { dispatch(listActiveJobs()); }, [dispatch]);
+  useEffect(() => {
+    dispatch(listActiveJobs());
+  }, [dispatch]);
 
   const filtered = useMemo(() => {
     if (!q.trim()) return content;
     const term = q.trim().toLowerCase();
-    return content.filter(j =>
+    return content.filter((j) =>
       j.title?.toLowerCase().includes(term) ||
       j.department?.toLowerCase().includes(term) ||
       j.location?.toLowerCase().includes(term)
@@ -35,7 +37,7 @@ const AdminJobsPage = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('Sind Sie sicher, dass Sie die Stellenanzeige löschen möchten?')) return;
+    if (!confirm('İş ilanını silmek istediğinize emin misiniz?')) return;
     await dispatch(deleteJob(id));
     dispatch(listActiveJobs());
   };
@@ -43,20 +45,20 @@ const AdminJobsPage = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-white">Stellenanzeigen</h1>
+        <h1 className="text-2xl font-bold text-white">İş İlanları</h1>
         <Link
           to="/admin/jobs/new"
           className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg"
         >
-          Neue Anzeige
+          Yeni İlan
         </Link>
       </div>
 
       <div className="bg-gray-800 rounded-lg p-4 mb-6">
         <input
           value={q}
-          onChange={(e)=>setQ(e.target.value)}
-          placeholder="Suche (Titel/Abteilung/Ort)"
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Ara (başlık/departman/konum)"
           className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white"
         />
       </div>
@@ -67,18 +69,18 @@ const AdminJobsPage = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-12 text-gray-400">Keine Einträge gefunden</div>
+          <div className="text-center py-12 text-gray-400">Kayıt bulunamadı</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-700">
                 <tr>
-                  <th className="py-3 px-4 text-left text-gray-300">Titel</th>
-                  <th className="py-3 px-4 text-left text-gray-300">Abteilung</th>
-                  <th className="py-3 px-4 text-left text-gray-300">Ort</th>
-                  <th className="py-3 px-4 text-left text-gray-300">Art</th>
-                  <th className="py-3 px-4 text-left text-gray-300">Status</th>
-                  <th className="py-3 px-4 text-left text-gray-300">Aktionen</th>
+                  <th className="py-3 px-4 text-left text-gray-300">Başlık</th>
+                  <th className="py-3 px-4 text-left text-gray-300">Departman</th>
+                  <th className="py-3 px-4 text-left text-gray-300">Konum</th>
+                  <th className="py-3 px-4 text-left text-gray-300">Tür</th>
+                  <th className="py-3 px-4 text-left text-gray-300">Durum</th>
+                  <th className="py-3 px-4 text-left text-gray-300">İşlemler</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-700">
@@ -96,28 +98,28 @@ const AdminJobsPage = () => {
                           j.active ? 'bg-emerald-500/20 text-emerald-500' : 'bg-red-500/20 text-red-500'
                         }`}
                       >
-                        {j.active ? 'Aktiv' : 'Inaktiv'}
+                        {j.active ? 'Aktif' : 'Pasif'}
                       </span>
                     </td>
                     <td className="py-3 px-4">
                       <div className="flex gap-2">
                         <button
-                          onClick={()=>toggleActive(j)}
+                          onClick={() => toggleActive(j)}
                           className="px-2 py-1 rounded bg-yellow-600/20 text-yellow-400 text-xs"
                         >
-                          {j.active ? 'Deaktivieren' : 'Aktivieren'}
+                          {j.active ? 'Pasife Al' : 'Aktifleştir'}
                         </button>
                         <button
-                          onClick={()=>navigate(`/admin/jobs/edit/${j.id}`)}
+                          onClick={() => navigate(`/admin/jobs/edit/${j.id}`)}
                           className="px-2 py-1 rounded bg-blue-600/20 text-blue-400 text-xs"
                         >
-                          Bearbeiten
+                          Düzenle
                         </button>
                         <button
-                          onClick={()=>handleDelete(j.id)}
+                          onClick={() => handleDelete(j.id)}
                           className="px-2 py-1 rounded bg-red-700/20 text-red-400 text-xs"
                         >
-                          Löschen
+                          Sil
                         </button>
                       </div>
                     </td>

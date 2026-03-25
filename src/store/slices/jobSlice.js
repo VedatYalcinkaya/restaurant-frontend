@@ -3,12 +3,6 @@ import api from '../../services/api';
 
 const BASE = '/jobs';
 
-const qs = (params = {}) =>
-  Object.entries(params)
-    .filter(([, v]) => v !== undefined && v !== null && v !== '')
-    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-    .join('&');
-
 // Public
 export const listActiveJobs = createAsyncThunk('jobs/listActive', async (_, { rejectWithValue }) => {
   try {
@@ -130,7 +124,7 @@ const jobSlice = createSlice({
       .addCase(deactivateJob.fulfilled, (state, action) => {
         state.current = action.payload;
       })
-      .addCase(deleteJob.fulfilled, (state) => {
+      .addCase(deleteJob.fulfilled, () => {
         // No-op; list yeniden fetch edilmeli
       });
   },

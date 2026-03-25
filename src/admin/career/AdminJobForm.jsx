@@ -23,7 +23,10 @@ const AdminJobForm = () => {
     active: true,
   });
 
-  useEffect(() => { if (isEdit) dispatch(getJobById(id)); }, [dispatch, isEdit, id]);
+  useEffect(() => {
+    if (isEdit) dispatch(getJobById(id));
+  }, [dispatch, isEdit, id]);
+
   useEffect(() => {
     if (isEdit && current) {
       setForm({
@@ -56,14 +59,14 @@ const AdminJobForm = () => {
       };
       if (isEdit) {
         await dispatch(updateJob({ id, payload })).unwrap();
-        toast.success('Stellenanzeige aktualisiert');
+        toast.success('İş ilanı güncellendi');
       } else {
         await dispatch(createJob(payload)).unwrap();
-        toast.success('Stellenanzeige erstellt');
+        toast.success('İş ilanı oluşturuldu');
       }
       navigate('/admin/jobs');
     } catch (err) {
-      toast.error(err?.response?.data?.message || err?.message || 'Vorgang fehlgeschlagen');
+      toast.error(err?.response?.data?.message || err?.message || 'İşlem başarısız');
     }
   };
 
@@ -75,12 +78,12 @@ const AdminJobForm = () => {
   return (
     <div>
       <h1 className="text-2xl font-bold text-white mb-6">
-        {isEdit ? 'Stellenanzeige bearbeiten' : 'Neue Stellenanzeige'}
+        {isEdit ? 'İş İlanını Düzenle' : 'Yeni İş İlanı'}
       </h1>
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Titel</label>
+            <label className="block text-sm text-gray-300 mb-1">Başlık</label>
             <input
               name="title"
               value={form.title}
@@ -92,7 +95,7 @@ const AdminJobForm = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-gray-300 mb-1">Abteilung</label>
+              <label className="block text-sm text-gray-300 mb-1">Departman</label>
               <input
                 name="department"
                 value={form.department}
@@ -101,7 +104,7 @@ const AdminJobForm = () => {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-300 mb-1">Ort</label>
+              <label className="block text-sm text-gray-300 mb-1">Konum</label>
               <input
                 name="location"
                 value={form.location}
@@ -111,23 +114,23 @@ const AdminJobForm = () => {
             </div>
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Beschäftigungsart</label>
+            <label className="block text-sm text-gray-300 mb-1">Çalışma Türü</label>
             <select
               name="employmentType"
               value={form.employmentType}
               onChange={handleChange}
               className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white"
             >
-              <option value="FULL_TIME">Vollzeit</option>
-              <option value="PART_TIME">Teilzeit</option>
-              <option value="INTERNSHIP">Praktikum</option>
-              <option value="CONTRACT">Befristet</option>
+              <option value="FULL_TIME">Tam Zamanlı</option>
+              <option value="PART_TIME">Yarı Zamanlı</option>
+              <option value="INTERNSHIP">Staj</option>
+              <option value="CONTRACT">Sözleşmeli</option>
             </select>
           </div>
         </div>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Beschreibung</label>
+            <label className="block text-sm text-gray-300 mb-1">Açıklama</label>
             <textarea
               name="description"
               value={form.description}
@@ -137,7 +140,7 @@ const AdminJobForm = () => {
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Anforderungen</label>
+            <label className="block text-sm text-gray-300 mb-1">Gereksinimler</label>
             <textarea
               name="requirements"
               value={form.requirements}
@@ -147,7 +150,7 @@ const AdminJobForm = () => {
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Leistungen</label>
+            <label className="block text-sm text-gray-300 mb-1">İmkanlar</label>
             <textarea
               name="benefits"
               value={form.benefits}
@@ -158,7 +161,7 @@ const AdminJobForm = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-gray-300 mb-1">Reihenfolge</label>
+              <label className="block text-sm text-gray-300 mb-1">Sıra</label>
               <input
                 type="number"
                 name="displayOrder"
@@ -176,7 +179,7 @@ const AdminJobForm = () => {
                   onChange={handleChange}
                   className="mr-2"
                 />
-                Aktiv
+                Aktif
               </label>
             </div>
           </div>
@@ -186,7 +189,7 @@ const AdminJobForm = () => {
             type="submit"
             className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg"
           >
-            {isEdit ? 'Aktualisieren' : 'Erstellen'}
+            {isEdit ? 'Güncelle' : 'Oluştur'}
           </button>
         </div>
       </form>
