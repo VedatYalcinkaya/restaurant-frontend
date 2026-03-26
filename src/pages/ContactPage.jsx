@@ -1,140 +1,114 @@
 import React from "react";
 import { motion as Motion } from "motion/react";
 import Contact from "../components/Contact";
-import { FaCalendarAlt, FaClock, FaExclamationTriangle } from "react-icons/fa";
+import { FiCalendar, FiClock, FiInfo } from "react-icons/fi";
 
 const ContactPage = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { when: "beforeChildren", staggerChildren: 0.2 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: "spring", stiffness: 100 },
-    },
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-canvas/30">
-      <Motion.div
-        className="py-16 bg-gradient-to-r from-shell/20 to-brand-red-soft/20 backdrop-blur-sm rounded-b-2xl border-b border-shell/10"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-paper pb-24">
+      {/* Şık ve Sade Hero Alanı */}
+      <section className="bg-canvas pt-32 pb-32 relative overflow-hidden">
+        {/* Dekoratif Arka Plan */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-full bg-gradient-to-b from-brand-red/5 to-transparent rounded-b-full pointer-events-none" />
+        
+        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
+          <Motion.span
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-block text-brand-red text-sm font-bold uppercase tracking-widest mb-4"
+          >
+            Bize Ulaşın
+          </Motion.span>
           <Motion.h1
-            className="text-4xl md:text-5xl font-bold text-ink text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-5xl md:text-6xl font-bold text-ink mb-6"
           >
-            İletişime Geçin
+            Sizi Dinliyoruz
           </Motion.h1>
-          <Motion.div
-            className="h-1 w-20 bg-gradient-to-r from-brand-red-soft to-shell rounded-full mx-auto mt-4"
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: 80, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          />
           <Motion.p
-            className="text-center text-lg text-gray-700 max-w-3xl mx-auto mt-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-lg text-smoke max-w-2xl mx-auto leading-relaxed"
           >
-            Rezervasyon, toplu sipariş ya da merak ettiğiniz konular için bize
-            ulaşın. En kısa sürede dönüş yapalım.
+            Soru, görüş, öneri veya özel rezervasyon talepleriniz için formu doldurabilir ya da iletişim kanallarından bize doğrudan ulaşabilirsiniz.
           </Motion.p>
         </div>
-      </Motion.div>
+      </section>
 
-      <div className="py-12">
+      {/* İletişim Formu (Contact Bileşeni) - Negatif margin ile hero'nun üzerine biner */}
+      <div className="-mt-16 relative z-20">
         <Contact />
       </div>
 
-      <Motion.div
-        className="max-w-7xl mx-auto px-4 mt-12 mb-20"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <h2 className="text-3xl font-bold text-ink mb-6">Ek Bilgiler</h2>
-        <div className="h-1 w-20 bg-gradient-to-r from-brand-red-soft to-shell rounded-full mb-10"></div>
+      {/* Ek Bilgiler - Daha sade kartlar */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-32">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold text-ink mb-4">Önemli Notlar</h2>
+          <div className="h-1 w-12 bg-brand-red mx-auto rounded-full" />
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <Motion.div
-            className="bg-white rounded-xl p-8 shadow-lg border border-gray-100"
-            variants={itemVariants}
-            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-white p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] box-border border border-shell/20 hover:border-brand-red/20 transition-colors"
           >
-            <div className="bg-gradient-to-br from-ink to-brand-red-soft p-3 rounded-full w-14 h-14 flex items-center justify-center mb-6">
-              <FaCalendarAlt className="text-white text-2xl" />
+            <div className="w-14 h-14 bg-brand-red/8 rounded-2xl flex items-center justify-center mb-6">
+              <FiCalendar className="text-brand-red text-2xl" />
             </div>
-            <h3 className="text-2xl font-semibold text-ink mb-4">Rezervasyon</h3>
-            <p className="text-gray-600 mb-4">
-              Rezervasyon için telefonla bize ulaşabilir ya da form bırakabilirsiniz.
-              Kalabalık masalar için mümkünse en az 1 gün önce haber vermeniz
-              yeterli.
+            <h3 className="text-xl font-bold text-ink mb-3">Rezervasyon Önceliği</h3>
+            <p className="text-smoke leading-relaxed">
+              Yoğun saatlerde bekleme süresini azaltmak için gelmeden önce arayabilir veya form üzerinden masa ayırtabilirsiniz. Kalabalık gruplar için 1 gün önceden haber verilmesini rica ediyoruz.
             </p>
-            <a
-              href="mailto:iletisim@alasogus.com"
-              className="inline-block text-brand-red-soft hover:text-ink font-medium transition-colors duration-300"
-            >
-              iletisim@alasogus.com
-            </a>
           </Motion.div>
 
           <Motion.div
-            className="bg-white rounded-xl p-8 shadow-lg border border-gray-100"
-            variants={itemVariants}
-            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="bg-white p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] box-border border border-shell/20 hover:border-brand-red/20 transition-colors"
           >
-            <div className="bg-gradient-to-br from-ink to-brand-red-soft p-3 rounded-full w-14 h-14 flex items-center justify-center mb-6">
-              <FaClock className="text-white text-2xl" />
+            <div className="w-14 h-14 bg-brand-red/8 rounded-2xl flex items-center justify-center mb-6">
+              <FiClock className="text-brand-red text-2xl" />
             </div>
-            <h3 className="text-2xl font-semibold text-ink mb-4">Çalışma Saatleri</h3>
-            <ul className="space-y-3 text-gray-600">
-              <li className="flex justify-between">
-                <span>Pazartesi - Cuma:</span>
-                <span className="font-medium">11:00 - 23:00</span>
+            <h3 className="text-xl font-bold text-ink mb-3">Servis Saatlerimiz</h3>
+            <p className="text-smoke leading-relaxed mb-4">
+              Haftanın her günü aynı özenle hizmetinizdeyiz. Özel günler için çalışma saatlerimiz değişiklik gösterebilir.
+            </p>
+            <ul className="space-y-2 text-sm text-ink font-medium">
+              <li className="flex justify-between items-center bg-canvas px-4 py-2 rounded-lg">
+                <span className="text-smoke">Hafta İçi</span>
+                <span>11:00 - 23:00</span>
               </li>
-              <li className="flex justify-between">
-                <span>Cumartesi - Pazar:</span>
-                <span className="font-medium">11:00 - 23:30</span>
+              <li className="flex justify-between items-center bg-canvas px-4 py-2 rounded-lg">
+                <span className="text-smoke">Hafta Sonu</span>
+                <span>11:00 - 23:30</span>
               </li>
             </ul>
           </Motion.div>
 
           <Motion.div
-            className="bg-white rounded-xl p-8 shadow-lg border border-gray-100"
-            variants={itemVariants}
-            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="bg-white p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] box-border border border-shell/20 hover:border-brand-red/20 transition-colors"
           >
-            <div className="bg-gradient-to-br from-ink to-brand-red-soft p-3 rounded-full w-14 h-14 flex items-center justify-center mb-6">
-              <FaExclamationTriangle className="text-white text-2xl" />
+            <div className="w-14 h-14 bg-brand-red/8 rounded-2xl flex items-center justify-center mb-6">
+              <FiInfo className="text-brand-red text-2xl" />
             </div>
-            <h3 className="text-2xl font-semibold text-ink mb-4">Özel Talepler</h3>
-            <p className="text-gray-600 mb-4">
-              Alerji, hassasiyet ya da toplu sipariş gibi notlarınız varsa
-              önceden iletin; hazırlığımızı size göre yapalım.
+            <h3 className="text-xl font-bold text-ink mb-3">Özel Talepler</h3>
+            <p className="text-smoke leading-relaxed">
+              Herhangi bir gıda hassasiyetiniz veya hazırlığa dair özel bir notunuz varsa lütfen bize iletin. Porsiyonlarınızı sizin hassasiyetlerinize uygun şekilde hazırlayalım.
             </p>
-            <a
-              href="tel:+905369151144"
-              className="text-ink font-bold hover:text-brand-red-soft transition-colors duration-300"
-            >
-              +90 (536) 915 11 44
-            </a>
           </Motion.div>
         </div>
-      </Motion.div>
+      </section>
     </div>
   );
 };

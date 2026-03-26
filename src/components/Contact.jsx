@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion as Motion } from "motion/react";
-import { FiMail, FiPhone, FiMapPin, FiCheck, FiX } from "react-icons/fi";
+import { FiMail, FiPhone, FiMapPin, FiCheck, FiX, FiArrowRight } from "react-icons/fi";
+import { FaWhatsapp, FaInstagram } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
   sendContactMessage,
@@ -47,232 +48,205 @@ const Contact = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        <Motion.div
-          className="bg-gradient-to-br from-ink/20 via-shell/30 to-brand-red-soft/20 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-ink/10"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h3 className="text-2xl font-bold text-ink mb-6">İletişim Bilgileri</h3>
-          <div className="h-1 w-16 bg-gradient-to-r from-brand-red-soft to-shell rounded-full mb-8"></div>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* İletişim Kartı */}
+      <Motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgb(0,0,0,0.06)] overflow-hidden flex flex-col lg:flex-row border border-shell/30 relative z-20"
+      >
+        {/* Sol Alan: İletişim Bilgileri */}
+        <div className="w-full lg:w-2/5 p-12 lg:p-16 bg-ink !text-white relative flex flex-col justify-between overflow-hidden">
+          {/* Arka plan dekoratif daireleri */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3 blur-2xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-brand-red/20 rounded-full translate-y-1/3 -translate-x-1/4 blur-3xl pointer-events-none" />
 
-          <div className="space-y-6">
-            <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <div className="bg-gradient-to-r from-ink to-brand-red w-12 h-12 rounded-full flex items-center justify-center">
-                  <FiMail className="text-white text-xl" />
+          <div className="relative z-10">
+            <h3 className="text-3xl font-bold mb-8 !text-white">İletişim Bilgilerimiz</h3>
+            <p className="!text-white opacity-70 mb-12 text-lg leading-relaxed">
+              Her türlü soru, görüş veya değerlendirmeniz için aşağıdaki kanallardan bize ulaşabilirsiniz.
+            </p>
+
+            <div className="space-y-8">
+              <a href="mailto:iletisim@alasogus.com" className="flex items-center gap-5 group">
+                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-brand-red font-semibold transition-colors">
+                  <FiMail className="text-xl !text-white" />
+                </div>
+                <div>
+                  <p className="text-xs !text-white opacity-50 uppercase tracking-widest font-bold mb-1">E-Posta</p>
+                  <p className="text-lg !text-white group-hover:!text-brand-red-soft transition-colors tracking-wide">iletisim@alasogus.com</p>
+                </div>
+              </a>
+
+              <a href="tel:+905369151144" className="flex items-center gap-5 group">
+                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-brand-red font-semibold transition-colors">
+                  <FiPhone className="text-xl !text-white" />
+                </div>
+                <div>
+                  <p className="text-xs !text-white opacity-50 uppercase tracking-widest font-bold mb-1">Telefon</p>
+                  <p className="text-lg !text-white group-hover:!text-brand-red-soft transition-colors tracking-wide">+90 (536) 915 11 44</p>
+                </div>
+              </a>
+
+              <div className="flex items-start gap-5">
+                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0 mt-1">
+                  <FiMapPin className="text-xl !text-white" />
+                </div>
+                <div>
+                  <p className="text-xs !text-white opacity-50 uppercase tracking-widest font-bold mb-1">Adres</p>
+                  <p className="text-lg !text-white opacity-90 leading-relaxed">
+                    Aydınlar Yolu, Anafartalar Cd.<br /> No:73 D:1, Muratpaşa / Antalya
+                  </p>
                 </div>
               </div>
-              <div className="ml-4">
-                <h4 className="text-lg font-semibold text-ink">E-posta</h4>
+            </div>
+
+            <div className="mt-12 pt-10 border-t border-white/10">
+              <h4 className="text-xs !text-white opacity-50 uppercase tracking-widest font-bold mb-6">Sosyal Medya & Direk İletişim</h4>
+              <div className="flex gap-4">
                 <a
-                  href="mailto:iletisim@alasogus.com"
-                  className="text-gray-600 hover:text-brand-red-soft transition-colors"
+                  href="https://wa.me/905369151144"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366]/20 text-[#25D366] hover:bg-[#25D366] hover:text-white transition-colors duration-300"
+                  title="WhatsApp'tan Yazın"
                 >
-                  iletisim@alasogus.com
+                  <FaWhatsapp className="text-2xl" />
+                </a>
+                <a
+                  href="https://instagram.com/alasogus_antalya"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center w-14 h-14 rounded-full bg-[#E1306C]/20 text-[#E1306C] hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#e6683c] hover:to-[#bc1888] hover:text-white transition-all duration-300"
+                  title="Instagram'da Takip Edin"
+                >
+                  <FaInstagram className="text-2xl" />
                 </a>
               </div>
             </div>
-
-            <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <div className="bg-gradient-to-r from-ink to-brand-red w-12 h-12 rounded-full flex items-center justify-center">
-                  <FiPhone className="text-white text-xl" />
-                </div>
-              </div>
-              <div className="ml-4">
-                <h4 className="text-lg font-semibold text-ink">Telefon</h4>
-                <a
-                  href="tel:+905369151144"
-                  className="text-gray-600 hover:text-brand-red-soft transition-colors"
-                >
-                  +90 (536) 915 11 44
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <div className="bg-gradient-to-r from-ink to-brand-red w-12 h-12 rounded-full flex items-center justify-center">
-                  <FiMapPin className="text-white text-xl" />
-                </div>
-              </div>
-              <div className="ml-4">
-                <h4 className="text-lg font-semibold text-ink">Adres</h4>
-                <p className="text-gray-600">
-                  Altındağ, Anafartalar Cd. No:73 D:1, Muratpaşa/Antalya
-                </p>
-              </div>
-            </div>
           </div>
+        </div>
 
-          <div className="mt-10">
-            <h4 className="text-xl font-semibold text-ink mb-4">Çalışma Saatleri</h4>
-            <ul className="space-y-2 text-gray-600">
-              <li className="flex justify-between">
-                <span>Pazartesi - Cuma:</span>
-                <span className="text-ink font-medium">11:00 - 23:00</span>
-              </li>
-              <li className="flex justify-between">
-                <span>Cumartesi - Pazar:</span>
-                <span className="text-ink font-medium">11:00 - 23:30</span>
-              </li>
-            </ul>
-          </div>
-        </Motion.div>
-
-        <Motion.div
-          className="lg:col-span-2 bg-white rounded-2xl p-8 shadow-lg border border-gray-100"
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <h3 className="text-2xl font-bold text-ink mb-6">Mesaj Gönderin</h3>
-          <div className="h-1 w-16 bg-gradient-to-r from-brand-red-soft to-shell rounded-full mb-8"></div>
+        {/* Sağ Alan: Form */}
+        <div className="w-full lg:w-3/5 p-12 lg:p-16 bg-white relative">
+          <h3 className="text-3xl font-bold text-ink mb-10">Bize Mesaj Gönderin</h3>
 
           {(formState.success || formState.error) && (
             <Motion.div
-              className={`mb-6 p-4 rounded-lg ${
+              className={`mb-8 p-4 rounded-xl shadow-sm border ${
                 formState.error
-                  ? "bg-red-100 text-red-800"
-                  : "bg-green-100 text-green-800"
-              } flex items-start`}
+                  ? "bg-red-50 text-red-800 border-red-200"
+                  : "bg-green-50 text-green-800 border-green-200"
+              } flex items-center gap-3 font-medium`}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <div className="mr-3 mt-0.5">
-                {formState.error ? (
-                  <FiX className="text-red-500" />
-                ) : (
-                  <FiCheck className="text-green-500" />
-                )}
+              <div className={`p-2 rounded-full ${formState.error ? "bg-red-100" : "bg-green-100"}`}>
+                {formState.error ? <FiX className="text-red-500" /> : <FiCheck className="text-green-500" />}
               </div>
-              <div>
+              <p>
                 {formState.error
                   ? typeof formState.error === "string"
                     ? formState.error
-                    : "Mesaj gönderilemedi"
-                  : "Mesajınız bize ulaştı"}
-              </div>
+                    : "Mesajınız iletilemedi. Lütfen tekrar deneyin."
+                  : "Mesajınız bize ulaştı. En kısa sürede dönüş yapacağız."}
+              </p>
             </Motion.div>
           )}
 
-          <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label
-                  htmlFor="fullName"
-                  className="block text-gray-700 font-medium mb-2"
-                >
-                  Ad Soyad
-                </label>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label htmlFor="fullName" className="text-xs font-bold uppercase tracking-wider text-smoke ml-1">Ad Soyad</label>
                 <input
                   type="text"
                   id="fullName"
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-all"
-                  placeholder="Adınızı ve soyadınızı girin"
+                  className="w-full px-5 py-4 bg-canvas border border-transparent rounded-xl focus:bg-white focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-ink placeholder:text-ink/30"
+                  placeholder="Ahmet Yılmaz"
                   required
                 />
               </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-gray-700 font-medium mb-2"
-                >
-                  E-posta
-                </label>
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-smoke ml-1">E-Posta</label>
                 <input
                   type="email"
                   id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-all"
-                  placeholder="E-posta adresinizi girin"
+                  className="w-full px-5 py-4 bg-canvas border border-transparent rounded-xl focus:bg-white focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-ink placeholder:text-ink/30"
+                  placeholder="ornek@mail.com"
                   required
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="block text-gray-700 font-medium mb-2"
-                >
-                  Telefon
-                </label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wider text-smoke ml-1">Telefon Numarası</label>
                 <input
                   type="tel"
                   id="phone"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-all"
-                  placeholder="Telefon numaranızı girin"
+                  className="w-full px-5 py-4 bg-canvas border border-transparent rounded-xl focus:bg-white focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-ink placeholder:text-ink/30"
+                  placeholder="0 (555) 000 00 00"
                 />
               </div>
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-gray-700 font-medium mb-2"
-                >
-                  Konu (isteğe bağlı)
-                </label>
+              <div className="space-y-2">
+                <label htmlFor="subject" className="text-xs font-bold uppercase tracking-wider text-smoke ml-1">Konu</label>
                 <input
                   type="text"
                   id="subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-all"
-                  placeholder="Konu girin"
+                  className="w-full px-5 py-4 bg-canvas border border-transparent rounded-xl focus:bg-white focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-ink placeholder:text-ink/30"
+                  placeholder="Hangi konuda yazıyorsunuz?"
                 />
               </div>
             </div>
 
-            <div className="mb-6">
-              <label
-                htmlFor="message"
-                className="block text-gray-700 font-medium mb-2"
-              >
-                Mesaj
-              </label>
+            <div className="space-y-2">
+              <label htmlFor="message" className="text-xs font-bold uppercase tracking-wider text-smoke ml-1">Mesajınız</label>
               <textarea
                 id="message"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
                 rows="5"
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-all"
-                placeholder="Mesajınızı yazın..."
+                className="w-full px-5 py-4 bg-canvas border border-transparent rounded-xl focus:bg-white focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 transition-all text-ink placeholder:text-ink/30 resize-none"
+                placeholder="Mesajınızı detaylı şekilde buraya yazabilirsiniz..."
                 required
               ></textarea>
             </div>
 
-            <div className="text-right">
+            <div className="pt-4">
               <button
                 type="submit"
                 disabled={formState.loading}
-                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-gradient-to-r from-brand-red to-brand-red-deep hover:from-brand-red/90 hover:to-brand-red-deep/90 transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-70"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-brand-red hover:bg-brand-red-deep text-white text-lg font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-70 disabled:pointer-events-none disabled:transform-none"
               >
-                {formState.loading ? "Gönderiliyor..." : "Gönder"}
+                {formState.loading ? "Gönderiliyor..." : "Mesajı Gönder"}
+                {!formState.loading && <FiArrowRight className="text-xl" />}
               </button>
             </div>
           </form>
-        </Motion.div>
-      </div>
+        </div>
+      </Motion.div>
 
+      {/* Harita */}
       <Motion.div
-        className="mt-12 rounded-2xl shadow-lg overflow-hidden h-96 border border-ink/10"
+        className="mt-16 rounded-[2rem] shadow-xl overflow-hidden h-[450px] border border-shell/50 relative z-10"
         initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.2 }}
       >
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3190.985645054469!2d30.69216867642104!3d36.890691672221564!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c3901c200e576f%3A0x62dfdfc8ccdf6deb!2zQWx0xLFuZGHEnywgQW5hZmFydGFsYXIgQ2QuIE5vOjczIEQ6MSwgMDcwNTAgTXVyYXRwYcWfYS9BbnRhbHlh!5e0!3m2!1str!2str!4v1746651435544!5m2!1str!2str"
@@ -283,7 +257,7 @@ const Contact = () => {
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
           title="Konum"
-          className="transition-all duration-300"
+          className="grayscale-0 hover:grayscale-0 transition-all duration-700 w-full h-full"
         ></iframe>
       </Motion.div>
     </div>
